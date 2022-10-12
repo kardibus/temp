@@ -1,23 +1,17 @@
 package com.kardibus.temp
 
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.math.RoundingMode
+import kotlin.random.Random
 
 @RestController
 class Controller {
 
-    private var list: MutableList<Model> = ArrayList()
-
-    @GetMapping("/{id}")
-    fun get(@PathVariable("id") id:Int): Model {
-        return list.get(id)
-    }
-
-    @PostMapping
-    fun set(@RequestBody mod: Model) {
-        list.add(mod)
+    @GetMapping("/")
+    fun get(): Model {
+        return Model().apply {
+            temp = Random.nextDouble(0.0,100.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+        }
     }
 }
