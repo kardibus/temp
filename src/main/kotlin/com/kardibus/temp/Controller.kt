@@ -13,6 +13,7 @@ class Controller {
         return Model().apply {
             temp = Random.nextDouble(0.0,100.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
             work = Random.nextBoolean()
+            prog = Random.nextInt()
         }
     }
 }
