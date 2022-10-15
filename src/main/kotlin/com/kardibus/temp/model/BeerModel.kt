@@ -1,4 +1,4 @@
-package com.kardibus.temp
+package com.kardibus.temp.model
 
 class BeerModel {
     var temp: Double = 0.0
