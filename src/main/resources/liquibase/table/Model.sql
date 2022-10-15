@@ -5,10 +5,10 @@ DROP TABLE IF EXISTS MODEL;
 
 CREATE TABLE IF NOT EXISTS MODEL
 (
-    id   INT AUTO_INCREMENT PRIMARY KEY,
+    id   INT PRIMARY KEY,
     prog INT,
     curr INT,
-    temp double,
+    temp float,
     work BOOLEAN DEFAULT false
 );
 
