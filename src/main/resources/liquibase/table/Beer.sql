@@ -8,7 +8,8 @@ CREATE SEQUENCE IF NOT EXISTS public.testincrement_sequence_beer INCREMENT 1 STA
 CREATE TABLE IF NOT EXISTS BEER
 (
     id   integer PRIMARY KEY NOT NULL DEFAULT nextval('testincrement_sequence_beer'::regclass),
-    temp float
+    temp float,
+    date timestamp
 );
 
 --rollback drop table IF EXISTS BEER;
