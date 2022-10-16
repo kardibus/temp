@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS BEER
     temp float
 );
 
-INSERT INTO BEER (id, temp)VALUES (1,73.0);
+INSERT INTO BEER (id, temp)VALUES (0,73.0);
 
 --rollback drop table IF EXISTS BEER;

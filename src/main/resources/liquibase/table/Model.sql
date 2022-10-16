@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS MODEL
     work BOOLEAN DEFAULT false
 );
 
-INSERT INTO model (id, prog, curr, temp, work)VALUES (1, 9, 1, 73.0, false);
+INSERT INTO model (id, prog, curr, temp, work)VALUES (0, 9, 1, 73.0, false);
 
 --rollback drop table IF EXISTS MODEL;
