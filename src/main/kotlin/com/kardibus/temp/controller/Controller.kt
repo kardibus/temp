@@ -17,7 +17,7 @@ class Controller(private val service: Service, private val beerModelService: Bee
         return service.getOneFirstModel()
     }
 
-    @PostMapping
+    @PostMapping("/")
     fun push(@RequestBody beer: Beer) {
         beerModelService.saveBeerModel(beer = beer)
     }

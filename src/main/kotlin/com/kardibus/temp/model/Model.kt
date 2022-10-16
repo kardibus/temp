@@ -1,12 +1,14 @@
 package com.kardibus.temp.model
 
 import javax.persistence.Entity
+import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
 class Model {
     @Id
-    var id:Long = 0
+    @GeneratedValue
+    var id: Long? = null
     var prog: Int = 0
     var curr: Int = 0
     var temp: Double = 0.0
