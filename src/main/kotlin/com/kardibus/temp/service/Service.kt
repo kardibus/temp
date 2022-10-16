@@ -9,6 +9,4 @@ class Service(private val repository: Repository) {
     fun getOneFirstModel(): Model {
         return repository.findAll().first()
     }
-
-
 }

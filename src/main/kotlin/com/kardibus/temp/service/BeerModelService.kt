@@ -6,6 +6,8 @@ import com.kardibus.temp.repository.BeerModelRepository
 @org.springframework.stereotype.Service
 class BeerModelService(private var beerModelRepository: BeerModelRepository) {
     fun saveBeerModel(beer: Beer) {
-        beerModelRepository.save(beer)
+        beerModelRepository.save(Beer().apply {
+            temp = beer.temp
+        })
     }
 }
