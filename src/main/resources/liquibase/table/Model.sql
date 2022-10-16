@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS MODEL;
 
 CREATE TABLE IF NOT EXISTS MODEL
 (
-    id   INT PRIMARY KEY,
+    id   serial PRIMARY KEY,
     prog INT,
     curr INT,
     temp float,

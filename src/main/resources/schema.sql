@@ -8,3 +8,11 @@ CREATE TABLE MODEL
     temp double,
     work BOOLEAN DEFAULT false
 );
+
+DROP TABLE IF EXISTS BEERMODEL;
+
+CREATE TABLE IF NOT EXISTS BEERMODEL
+(
+    id   serial PRIMARY KEY,
+    temp float
+);
