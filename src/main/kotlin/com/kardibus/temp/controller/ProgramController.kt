@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class Controller(private val service: Service, private val beerModelService: BeerModelService) {
+class ProgramController(private val service: Service, private val beerModelService: BeerModelService) {
 
-    @GetMapping("/")
+    @GetMapping
     fun get(): Model {
         return service.getOneFirstModel()
     }
 
-    @PostMapping("/")
+    @PostMapping
     fun push(@RequestBody beer: Beer) {
         beerModelService.saveBeerModel(beer = beer)
     }
