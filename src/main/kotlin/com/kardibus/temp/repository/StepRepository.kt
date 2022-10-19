@@ -1,7 +1,7 @@
 package com.kardibus.temp.repository
 
-import com.kardibus.temp.model.Beer
+import com.kardibus.temp.model.programbeer.Step
 import org.springframework.data.jpa.repository.JpaRepository
 
 @org.springframework.stereotype.Repository
-interface BeerModelRepository : JpaRepository<Beer, Long>
+interface StepRepository : JpaRepository<Step, Long>

@@ -16,19 +16,23 @@ class CommonConfig {
                 name = "beer"
                 work = false
             }
-                    to listOf(Step().apply {
-                id = 0
-                step = 1
-                time = 10
-            }, Step().apply {
-                id = 1
-                step = 2
-                time = 20
-            }, Step().apply {
-                id = 2
-                step = 3
-                time = 40
-            })
+                to listOf(
+                    Step().apply {
+                        id = 0
+                        step = 1
+                        time = 10
+                    },
+                    Step().apply {
+                        id = 1
+                        step = 2
+                        time = 20
+                    },
+                    Step().apply {
+                        id = 2
+                        step = 3
+                        time = 40
+                    }
+                )
         )
     }
 }

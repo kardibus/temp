@@ -10,7 +10,8 @@ class Step {
     @GeneratedValue
     var id: Long? = null
     var step: Long? = null
-    var time: Int? = null
+    var time: Long? = null
+    var prog_id: Long? = null
 
     override fun toString(): String {
         return "step{id=$id, step=$step, time=$time}"
