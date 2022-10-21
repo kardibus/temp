@@ -1,11 +1,12 @@
-package com.kardibus.temp.dto
+package com.kardibus.temp.dto.mapper
 
+import com.kardibus.temp.dto.ProgramDto
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import kotlin.streams.toList
 
 class MapperImp : Mapper<Step, Program, ProgramDto> {
-    override fun to(entity: List<Step>, entityTwo: Program): ProgramDto {
+    override fun toProgramDto(entity: List<Step>, entityTwo: Program): ProgramDto {
         return ProgramDto().apply {
             id = entityTwo.id
             name = entityTwo.name
@@ -21,11 +22,11 @@ class MapperImp : Mapper<Step, Program, ProgramDto> {
         }
     }
 
-    override fun from(domain: ProgramDto): List<Step> {
+    override fun fromStep(domain: ProgramDto): List<Step> {
         return domain.steps?.toList() ?: listOf()
     }
 
-    override fun fromTwo(domain: ProgramDto): Program {
+    override fun fromProgram(domain: ProgramDto): Program {
         return Program().apply {
             id = domain.id
             name = domain.name

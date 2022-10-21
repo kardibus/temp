@@ -1,7 +1,8 @@
 package com.kardibus.temp.dao
 
-import com.kardibus.temp.dto.MapperImp
 import com.kardibus.temp.dto.ProgramDto
+import com.kardibus.temp.dto.mapper.MapperImp
+import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
@@ -15,7 +16,7 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         var list: MutableList<ProgramDto> = ArrayList()
         var step: MutableList<Step> = stepRepository.findAll()
         programRepository.findAll().stream().map { prg ->
-            list.add(MapperImp().to(step.stream().filter { a -> a.prog_id == prg.id }.toList(), prg))
+            list.add(MapperImp().toProgramDto(step.stream().filter { a -> a.prog_id == prg.id }.toList(), prg))
         }.toArray()
 
         return list
@@ -25,9 +26,21 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         var list: MutableList<ProgramDto> = ArrayList()
         var step: MutableList<Step> = stepRepository.findAll()
         programRepository.findById(id).stream().map { prg ->
-            list.add(MapperImp().to(step.stream().filter { a -> a.prog_id == prg.id }.toList(), prg))
+            list.add(MapperImp().toProgramDto(step.stream().filter { a -> a.prog_id == prg.id }.toList(), prg))
         }.toArray()
 
         return list
+    }
+
+    fun deleteProgram(id: Long) {
+
+     //   var listStep = stepRepository.findByProg_id(id)
+     //   stepRepository.deleteAll(listStep)
+
+     //   programRepository.delete(programRepository.findById(id).get())
+    }
+
+    fun updateProgram(map:Map<Program, List<Step>>){
+
     }
 }
