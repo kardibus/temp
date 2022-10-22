@@ -2,8 +2,7 @@ package com.kardibus.temp.controller
 
 import com.kardibus.temp.dao.ProgramDao
 import com.kardibus.temp.dto.ProgramDto
-import com.kardibus.temp.model.programbeer.Program
-import com.kardibus.temp.model.programbeer.Step
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -28,14 +28,17 @@ class ProgramStepController(private val programDao: ProgramDao) {
     }
 
     @PostMapping
-    fun createProgram(@RequestBody map: Map<Program, List<Step>>) {
+    fun createProgram(@RequestBody map: List<ProgramDto>) {
+        programDao.createProgram(map)
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    fun updateProgram(@RequestBody map: Map<Program, List<Step>>) {
+    fun updateProgram(@RequestBody map: List<ProgramDto>) {
         programDao.updateProgram(map)
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     fun deleteProgram(@PathVariable("id") id: Long) {
         programDao.deleteProgram(id = id)

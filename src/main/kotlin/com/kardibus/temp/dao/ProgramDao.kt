@@ -2,7 +2,6 @@ package com.kardibus.temp.dao
 
 import com.kardibus.temp.dto.ProgramDto
 import com.kardibus.temp.dto.mapper.MapperImp
-import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
@@ -39,6 +38,49 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         programRepository.delete(programRepository.findById(id).get())
     }
 
-    fun updateProgram(map: Map<Program, List<Step>>) {
+    fun updateProgram(map: List<ProgramDto>) {
+        map.stream().map { prog ->
+            var progBase = programRepository.findById(prog.id!!)
+            var stepBase = stepRepository.findByProg_id(prog.id!!)
+            var steps = prog.steps
+
+            if (!progBase.isEmpty) {
+                programRepository.save(
+                    progBase.get().apply {
+                        name = prog.name
+                        work = prog.work
+                    }
+                )
+
+                if (stepBase.isNotEmpty()) {
+                    steps!!.stream().map { s ->
+                        var st = stepBase.stream().filter { st -> st.id == s.id }
+
+                        stepRepository.save(
+                            st.toList().get(0).apply {
+                                step = s.step
+                                time = s.time
+                                prog_id = s.prog_id
+                            }
+                        )
+                    }.toArray()
+                }
+            }
+        }.toArray()
+    }
+
+    fun createProgram(map: List<ProgramDto>) {
+        map.stream().map { prog ->
+            var steps = prog.steps!!.toList()
+            var prog_id = programRepository.getIdProg()
+
+            programRepository.save(MapperImp().fromProgram(prog))
+
+            steps.forEach { a ->
+                a.prog_id = prog_id
+            }
+
+            stepRepository.saveAll(steps)
+        }.toArray()
     }
 }
