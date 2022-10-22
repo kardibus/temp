@@ -13,10 +13,11 @@ import java.time.LocalDateTime
 @Service
 class ProgramService(private var programDao: ProgramDao, private var modelDao: ModelDao, private var stepDao: StepDao) {
 
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 20000)
     fun timeWorkProgram() {
         var program = getProgram()
         var date = LocalDateTime.now()
+
 
 
         if (program.work && !program.pause) {
@@ -44,8 +45,13 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
             }.toArray()
         }
 
-        if (program.pause){
-
+        if (program.work && program.pause) {
+            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
+            steps.stream().map { s->
+                programDao.saveStep(s.apply {
+                    toDate = date.plusMinutes(s.time!!.toLong())
+                })
+            }.toArray()
         }
 
         if (!program.work) {
