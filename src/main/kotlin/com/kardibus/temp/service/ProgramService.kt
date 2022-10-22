@@ -37,7 +37,8 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
                 }
                 model(prog, s)
             }.toArray()
-        } else {
+        }
+        if (!prog.work) {
             modelDao.updeteModel(modelDao.getModel().get().apply {
                 work = false
             })
