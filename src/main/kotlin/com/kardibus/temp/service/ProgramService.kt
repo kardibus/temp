@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Service
 class ProgramService(private var programDao: ProgramDao, private var modelDao: ModelDao, private var stepDao: StepDao) {
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 100000)
     fun timeWorkProgram() {
         var prog = getProgram()
         var date = LocalDateTime.now()
