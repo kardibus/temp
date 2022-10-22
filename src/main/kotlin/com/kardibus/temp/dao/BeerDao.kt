@@ -1,10 +1,12 @@
-package com.kardibus.temp.service
+package com.kardibus.temp.dao
 
 import com.kardibus.temp.model.Beer
 import com.kardibus.temp.repository.BeerRepository
+import org.springframework.stereotype.Component
 
-@org.springframework.stereotype.Service
-class BeerService(private var beerRepository: BeerRepository) {
+@Component
+class BeerDao(private var beerRepository: BeerRepository) {
+
     fun saveBeerModel(beer: Beer) {
         beerRepository.save(beer)
     }

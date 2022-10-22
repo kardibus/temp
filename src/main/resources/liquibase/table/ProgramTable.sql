@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS PROGRAM
 (
     id   integer PRIMARY KEY NOT NULL DEFAULT nextval('testincrement_sequence_program'::regclass),
     name varchar(255),
-    work boolean                      default false
+    work boolean                      default false,
+    pause boolean                     default true
 );
 
 --rollback drop table IF EXISTS PROGRAM;
@@ -20,11 +21,13 @@ CREATE SEQUENCE IF NOT EXISTS public.testincrement_sequence_step INCREMENT 1 STA
 
 CREATE TABLE IF NOT EXISTS STEP
 (
-    id   integer PRIMARY KEY NOT NULL DEFAULT nextval('testincrement_sequence_step'::regclass),
+    id integer PRIMARY KEY NOT NULL DEFAULT nextval('testincrement_sequence_step'::regclass),
     step integer,
     time integer,
+    fromDate timestamp,
+    toDate timestamp,
     prog_id integer,
-    FOREIGN KEY (prog_id) REFERENCES PROGRAM (Id)
-);
+    FOREIGN KEY
+(prog_id) REFERENCES PROGRAM(Id));
 
 --rollback drop table IF EXISTS STEP;

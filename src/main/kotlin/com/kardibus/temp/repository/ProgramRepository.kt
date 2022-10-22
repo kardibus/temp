@@ -9,4 +9,7 @@ interface ProgramRepository : JpaRepository<Program, Long> {
 
     @Query("select prg.last_value from testincrement_sequence_program prg", nativeQuery = true)
     fun getIdProg(): Long
+
+    @Query("select p from Program p where p.work = true ")
+    fun getProgEnable(): List<Program>
 }
