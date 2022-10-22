@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component
 @Component
 class ModelDao(private var modelRepository: ModelRepository) {
 
-
     fun getModel(): ModelDto {
         return MapperModelImp().toModel(modelRepository.findAll().first())
     }
 
-    fun updateModel(model: Model){
-        if(!modelRepository.findById(model.id!!).isEmpty) modelRepository.save(model)
+    fun updateModel(model: Model) {
+        if (!modelRepository.findById(model.id!!).isEmpty) modelRepository.save(model)
     }
 }

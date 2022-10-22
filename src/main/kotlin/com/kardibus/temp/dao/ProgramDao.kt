@@ -33,14 +33,12 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
     }
 
     fun deleteProgram(id: Long) {
+        var listStep = stepRepository.findByProg_id(id)
+        stepRepository.deleteAll(listStep)
 
-     //   var listStep = stepRepository.findByProg_id(id)
-     //   stepRepository.deleteAll(listStep)
-
-     //   programRepository.delete(programRepository.findById(id).get())
+        programRepository.delete(programRepository.findById(id).get())
     }
 
-    fun updateProgram(map:Map<Program, List<Step>>){
-
+    fun updateProgram(map: Map<Program, List<Step>>) {
     }
 }
