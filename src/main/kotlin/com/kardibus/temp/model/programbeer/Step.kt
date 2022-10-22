@@ -1,18 +1,19 @@
-package com.kardibus.temp.model
+package com.kardibus.temp.model.programbeer
 
-import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-class Beer {
+class Step {
     @Id
     @GeneratedValue
     var id: Long? = null
-    var temp: Double = 0.0
-    var date: LocalDateTime = LocalDateTime.now()
+    var step: Long? = null
+    var time: Long? = null
+    var prog_id: Long? = null
+
     override fun toString(): String {
-        return "Beer(id=$id, temp=$temp)"
+        return "step{id=$id, step=$step, time=$time}"
     }
 }
