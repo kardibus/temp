@@ -13,17 +13,18 @@ import java.time.LocalDateTime
 @Service
 class ProgramService(private var programDao: ProgramDao, private var modelDao: ModelDao, private var stepDao: StepDao) {
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     fun timeWorkProgram() {
-        var prog = getProgram()
+        var program = getProgram()
         var date = LocalDateTime.now()
 
 
-        if (prog.work && !prog.pause) {
 
-            var steps = programDao.stepByProg_idNotDone(prog.id!!.toLong())
+        if (program.work && !program.pause) {
 
-            if (steps.isEmpty()) programDao.updateProgram(prog.apply {
+            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
+
+            if (steps.isEmpty()) programDao.updateProgram(program.apply {
                 work = false
             })
 
@@ -40,11 +41,24 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
                         done = true
                     })
                 }
-                model(prog, s)
+                model(program, s)
             }.toArray()
         }
-        if (!prog.work) {
+
+        if (program.work && program.pause) {
+            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
+            steps.stream().map { s->
+                programDao.saveStep(s.apply {
+                    toDate = date.plusMinutes(s.time!!.toLong())
+                })
+            }.toArray()
+        }
+
+        if (!program.work) {
             modelDao.updeteModel(modelDao.getModel().get().apply {
+                temp = 0.0
+                prog = 0
+                curr = 0
                 work = false
             })
         }
