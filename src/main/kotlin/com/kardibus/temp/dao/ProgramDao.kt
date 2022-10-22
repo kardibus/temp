@@ -7,6 +7,7 @@ import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
 import org.springframework.stereotype.Component
+import java.util.Optional
 import kotlin.streams.toList
 
 @Component
@@ -85,7 +86,15 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         }.toArray()
     }
 
-    fun programTrue(): List<Program> {
+    fun programTrue(): Optional<Program> {
         return programRepository.getProgEnable()
+    }
+
+    fun stepByProg_idNotDone(id: Long): List<Step> {
+        return stepRepository.findByProg_idNotDone(id)
+    }
+
+    fun saveStep(step: Step){
+        stepRepository.save(step)
     }
 }

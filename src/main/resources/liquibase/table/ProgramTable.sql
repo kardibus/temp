@@ -22,10 +22,12 @@ CREATE SEQUENCE IF NOT EXISTS public.testincrement_sequence_step INCREMENT 1 STA
 CREATE TABLE IF NOT EXISTS STEP
 (
     id integer PRIMARY KEY NOT NULL DEFAULT nextval('testincrement_sequence_step'::regclass),
-    step integer,
-    time integer,
-    fromDate timestamp,
-    toDate timestamp,
+    step integer default 0,
+    time integer default 0,
+    from_Date timestamp,
+    to_Date timestamp,
+    done boolean default false,
+    temp integer default 0,
     prog_id integer,
     FOREIGN KEY
 (prog_id) REFERENCES PROGRAM(Id));
