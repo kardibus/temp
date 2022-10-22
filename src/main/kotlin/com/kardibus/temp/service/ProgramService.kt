@@ -22,6 +22,11 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         if (prog.work && !prog.pause) {
 
             var steps = programDao.stepByProg_idNotDone(prog.id!!.toLong())
+
+            if (steps.isEmpty()) programDao.updateProgram(prog.apply {
+                work = false
+            })
+
             steps.stream().map { s ->
                 if (s.fromDate == null && !s.done && s.toDate == null) {
 

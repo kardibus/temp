@@ -97,4 +97,8 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
     fun saveStep(step: Step){
         stepRepository.save(step)
     }
+
+    fun updateProgram(program: Program){
+        programRepository.save(program)
+    }
 }
