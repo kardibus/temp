@@ -11,6 +11,7 @@ class Program {
     var id: Long? = null
     var name: String? = null
     var work: Boolean = false
+    var pause:Boolean = true
 
     override fun toString(): String {
         return "Program(id=$id, name=$name, work=$work)"
