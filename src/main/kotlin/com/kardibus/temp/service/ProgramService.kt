@@ -15,15 +15,15 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
 
     @Scheduled(fixedRate = 100000)
     fun timeWorkProgram() {
-        var prog = getProgram()
+        var program = getProgram()
         var date = LocalDateTime.now()
 
 
-        if (prog.work && !prog.pause) {
+        if (program.work && !program.pause) {
 
-            var steps = programDao.stepByProg_idNotDone(prog.id!!.toLong())
+            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
 
-            if (steps.isEmpty()) programDao.updateProgram(prog.apply {
+            if (steps.isEmpty()) programDao.updateProgram(program.apply {
                 work = false
             })
 
@@ -40,11 +40,19 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
                         done = true
                     })
                 }
-                model(prog, s)
+                model(program, s)
             }.toArray()
         }
-        if (!prog.work) {
+
+        if (program.pause){
+
+        }
+
+        if (!program.work) {
             modelDao.updeteModel(modelDao.getModel().get().apply {
+                temp = 0.0
+                prog = 0
+                curr = 0
                 work = false
             })
         }
