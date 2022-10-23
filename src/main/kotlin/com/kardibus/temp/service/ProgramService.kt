@@ -55,7 +55,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         }
 
         if (!program.work) {
-            modelDao.updeteModel(modelDao.getModel().get().apply {
+            getModel().apply {
                 temp = 0.0
                 prog = 0
                 curr = 0
@@ -68,7 +68,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         var model = modelDao.getByIdModel().get()
 
         modelDao.updeteModel(model.apply {
-            prog = getCountStep(program.id!!)
+            prog = stepDao.getCountStep(program.id!!)
             curr = steps.step!!
             temp = steps.temp.toDouble()
             work = program.work
@@ -78,6 +78,4 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
 
     fun getProgram() = if (!programDao.programTrue().isEmpty) programDao.programTrue().get() else Program()
     fun getModel() = if (!modelDao.getModel().isEmpty) modelDao.getModel().get() else Model()
-
-    fun getCountStep(id: Long) = stepDao.getCountStep(id)
 }
