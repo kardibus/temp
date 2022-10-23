@@ -56,7 +56,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
 
         if (!program.work) {
             modelDao.updeteModel(getModel().apply {
-                temp = 0.0
+                temp = 40.0
                 prog = 0
                 curr = 0
                 work = false
