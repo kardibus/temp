@@ -60,7 +60,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
                 prog = 0
                 curr = 0
                 work = false
-            })
+            }
         }
     }
 
