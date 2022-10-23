@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Service
 class ProgramService(private var programDao: ProgramDao, private var modelDao: ModelDao, private var stepDao: StepDao) {
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 40000)
     fun timeWorkProgram() {
         var program = getProgram()
         var date = LocalDateTime.now()
@@ -49,7 +49,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
             var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
             steps.stream().map { s->
                 programDao.saveStep(s.apply {
-                    toDate = date.plusMinutes(s.time!!.toLong())
+                    toDate = s.toDate!!.plusSeconds(40)
                 })
             }.toArray()
         }
