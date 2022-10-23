@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Service
 class ProgramService(private var programDao: ProgramDao, private var modelDao: ModelDao, private var stepDao: StepDao) {
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 40000)
     fun timeWorkProgram() {
         var program = getProgram()
         var date = LocalDateTime.now()
@@ -49,18 +49,18 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
             var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
             steps.stream().map { s->
                 programDao.saveStep(s.apply {
-                    toDate = date.plusMinutes(s.time!!.toLong())
+                    toDate = s.toDate!!.plusSeconds(40)
                 })
             }.toArray()
         }
 
         if (!program.work) {
-            modelDao.updeteModel(modelDao.getModel().get().apply {
+            getModel().apply {
                 temp = 0.0
                 prog = 0
                 curr = 0
                 work = false
-            })
+            }
         }
     }
 
@@ -68,7 +68,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         var model = modelDao.getByIdModel().get()
 
         modelDao.updeteModel(model.apply {
-            prog = getCountStep(program.id!!)
+            prog = stepDao.getCountStep(program.id!!)
             curr = steps.step!!
             temp = steps.temp.toDouble()
             work = program.work
@@ -78,6 +78,4 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
 
     fun getProgram() = if (!programDao.programTrue().isEmpty) programDao.programTrue().get() else Program()
     fun getModel() = if (!modelDao.getModel().isEmpty) modelDao.getModel().get() else Model()
-
-    fun getCountStep(id: Long) = stepDao.getCountStep(id)
 }
