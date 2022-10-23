@@ -22,7 +22,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
 
         if (program.work && !program.pause) {
 
-            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
+            val steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
 
             if (steps.isEmpty()) programDao.updateProgram(program.apply {
                 work = false
@@ -46,7 +46,7 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         }
 
         if (program.work && program.pause) {
-            var steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
+            val steps = programDao.stepByProg_idNotDone(program.id!!.toLong())
             steps.stream().map { s->
                 programDao.saveStep(s.apply {
                     toDate = s.toDate!!.plusSeconds(40)
@@ -55,17 +55,17 @@ class ProgramService(private var programDao: ProgramDao, private var modelDao: M
         }
 
         if (!program.work) {
-            getModel().apply {
+            modelDao.updeteModel(getModel().apply {
                 temp = 0.0
                 prog = 0
                 curr = 0
                 work = false
-            }
+            })
         }
     }
 
     fun model(program: Program, steps: Step) {
-        var model = modelDao.getByIdModel().get()
+        val model = modelDao.getByIdModel().get()
 
         modelDao.updeteModel(model.apply {
             prog = stepDao.getCountStep(program.id!!)
