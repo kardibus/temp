@@ -6,6 +6,7 @@ import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ModelRepository
 import com.kardibus.temp.repository.StepRepository
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -67,7 +68,7 @@ class ProgramService(
             })
         }
     }
-
+    @CacheEvict(value= ["name"],allEntries=true)
     fun model(program: Program, steps: Step) {
         val model = modelRepository.findByProg().get()
 
