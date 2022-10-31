@@ -7,7 +7,7 @@ import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
 import org.springframework.stereotype.Component
-import java.util.Optional
+import java.util.*
 import kotlin.streams.toList
 
 @Component
@@ -40,7 +40,7 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         programRepository.delete(programRepository.findById(id).get())
     }
 
-    fun updateProgram(map: List<ProgramDto>) {
+    fun updateProgram(map: List<ProgramDto>): List<ProgramDto> {
         map.stream().map { prog ->
             var progBase = programRepository.findById(prog.id!!)
             var stepBase = stepRepository.findByProg_id(prog.id!!)
@@ -69,9 +69,11 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
                 }
             }
         }.toArray()
+
+        return map
     }
 
-    fun createProgram(map: List<ProgramDto>) {
+    fun createProgram(map: List<ProgramDto>): List<ProgramDto> {
         map.stream().map { prog ->
             var steps = prog.steps!!.toList()
             var prog_id = programRepository.getIdProg()
@@ -84,21 +86,24 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
 
             stepRepository.saveAll(steps)
         }.toArray()
+
+        return map
     }
 
-    fun programTrue(): Optional<Program> {
+    fun getProgramTrue(): Optional<Program> {
         return programRepository.getProgEnable()
     }
 
-    fun stepByProg_idNotDone(id: Long): List<Step> {
+    fun getStepByProg_idNotDone(id: Long): List<Step> {
         return stepRepository.findByProg_idNotDone(id)
     }
 
-    fun saveStep(step: Step){
+    fun saveStep(step: Step): Step {
         stepRepository.save(step)
+        return step
     }
 
-    fun updateProgram(program: Program){
+    fun updateProgram(program: Program) {
         programRepository.save(program)
     }
 }
