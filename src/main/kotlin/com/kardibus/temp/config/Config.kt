@@ -13,6 +13,6 @@ class Config : WebMvcConfigurer {
         registry
             .addMapping("/**")
             .allowedOrigins("http://localhost:3001")
-            .allowedOrigins("https://kardibus-temp.herokuapp.com")
+            .allowedOrigins("https://kardibus-beer-ui.herokuapp.com")
     }
 }
