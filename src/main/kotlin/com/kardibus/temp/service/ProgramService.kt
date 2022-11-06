@@ -23,28 +23,32 @@ class ProgramService(
         var program = getProgram()
         var date = LocalDateTime.now()
 
-
-
         if (program.work && !program.pause) {
-
             val steps = programDao.getStepByProg_idNotDone(program.id!!.toLong())
 
-            if (steps.isEmpty()) programDao.updateProgram(program.apply {
-                work = false
-            })
+            if (steps.isEmpty()) {
+                programDao.updateProgram(
+                    program.apply {
+                        work = false
+                    }
+                )
+            }
 
             steps.stream().map { s ->
                 if (s.fromDate == null && !s.done && s.toDate == null) {
-
-                    programDao.saveStep(s.apply {
-                        fromDate = date
-                        toDate = date.plusMinutes(s.time!!.toLong())
-                    })
+                    programDao.saveStep(
+                        s.apply {
+                            fromDate = date
+                            toDate = date.plusMinutes(s.time!!.toLong())
+                        }
+                    )
                 }
                 if (s.toDate!!.isBefore(date)) {
-                    programDao.saveStep(s.apply {
-                        done = true
-                    })
+                    programDao.saveStep(
+                        s.apply {
+                            done = true
+                        }
+                    )
                 }
                 model(program, s)
             }.toArray()
@@ -53,32 +57,40 @@ class ProgramService(
         if (program.work && program.pause) {
             val steps = programDao.getStepByProg_idNotDone(program.id!!.toLong())
             steps.stream().map { s ->
-                programDao.saveStep(s.apply {
-                    toDate = s.toDate!!.plusSeconds(40)
-                })
+                programDao.saveStep(
+                    s.apply {
+                        toDate = s.toDate!!.plusSeconds(40)
+                    }
+                )
             }.toArray()
         }
 
         if (!program.work) {
-            modelRepository.save(getModel().apply {
-                temp = 40.0
-                prog = 0
-                curr = 0
-                work = false
-            })
+            model(
+                Program().apply {
+                    id = 0
+                    work = false
+                },
+                Step().apply {
+                    temp = 0
+                    step = 0
+                }
+            )
         }
     }
-    @CacheEvict(value= ["name"],allEntries=true)
+
+    @CacheEvict(value = ["name"], allEntries = true)
     fun model(program: Program, steps: Step) {
         val model = modelRepository.findByProg().get()
 
-        modelRepository.save(model.apply {
-            prog = stepRepository.findByCountStep(program.id!!)
-            curr = steps.step!!
-            temp = steps.temp.toDouble()
-            work = program.work
-        })
-
+        modelRepository.save(
+            model.apply {
+                prog = stepRepository.findByCountStep(program.id!!)
+                curr = steps.step!!
+                temp = steps.temp.toDouble()
+                work = program.work
+            }
+        )
     }
 
     fun getProgram() = if (!programDao.getProgramTrue().isEmpty) programDao.getProgramTrue().get() else Program()

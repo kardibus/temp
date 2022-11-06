@@ -2,7 +2,7 @@ package com.kardibus.temp.controller
 
 import com.kardibus.temp.dao.ProgramDao
 import com.kardibus.temp.dto.ProgramDto
-import com.kardibus.temp.service.ProgramService
+import com.kardibus.temp.dto.WorkDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 class ProgramStepController(private val programDao: ProgramDao) {
 
     @GetMapping
-    fun getAllProgram(): List<ProgramDto> {
-        return programDao.getAllProgram()
+    fun getAllProgram(): ProgramDto {
+        return programDao.getAllProgram().first()
     }
 
     @GetMapping("/{id}")
@@ -39,5 +39,10 @@ class ProgramStepController(private val programDao: ProgramDao) {
     @DeleteMapping("/{id}")
     fun deleteProgram(@PathVariable("id") id: Long) {
         programDao.deleteProgram(id = id)
+    }
+
+    @PostMapping("/work")
+    fun changeWork(@RequestBody workDto: WorkDto){
+         programDao.changeWork(workDto.work)
     }
 }

@@ -7,10 +7,12 @@ import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 import kotlin.streams.toList
 
 @Component
+@Transactional
 class ProgramDao(private val programRepository: ProgramRepository, private var stepRepository: StepRepository) {
 
     fun getAllProgram(): List<ProgramDto> {
@@ -105,5 +107,9 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
 
     fun updateProgram(program: Program) {
         programRepository.save(program)
+    }
+
+    fun changeWork(work:Boolean){
+        programRepository.changeWorkProgram(work)
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
+/** Принимаем температуру с датчика микроконтроллера */
 @RestController
 class BeerController(private val beerRepository: BeerRepository) {
 
