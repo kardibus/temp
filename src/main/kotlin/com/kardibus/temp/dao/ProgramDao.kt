@@ -109,7 +109,7 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         programRepository.save(program)
     }
 
-    fun changeWork(work:Boolean){
+    fun changeWork(work: Boolean) {
         programRepository.changeWorkProgram(work)
     }
 }

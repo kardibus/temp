@@ -42,7 +42,7 @@ class ProgramStepController(private val programDao: ProgramDao) {
     }
 
     @PostMapping("/work")
-    fun changeWork(@RequestBody workDto: WorkDto){
-         programDao.changeWork(workDto.work)
+    fun changeWork(@RequestBody workDto: WorkDto) {
+        programDao.changeWork(workDto.work)
     }
 }

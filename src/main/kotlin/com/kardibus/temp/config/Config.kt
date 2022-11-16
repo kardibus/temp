@@ -8,11 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 @EnableWebMvc
 class Config : WebMvcConfigurer {
+
     override fun addCorsMappings(registry: CorsRegistry) {
-        super.addCorsMappings(registry)
         registry
             .addMapping("/**")
-            .allowedOrigins("http://localhost:3001")
-            .allowedOrigins("https://kardibus-beer-ui.herokuapp.com")
+            .allowedMethods("*")
     }
 }
