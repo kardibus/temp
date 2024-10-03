@@ -1,7 +1,7 @@
 package com.kardibus.temp.dto.mapper
 
 import com.kardibus.temp.dto.BeerDto
-import com.kardibus.temp.model.Beer
+import com.kardibus.temp.model.brewery.Beer
 
 class MapperBeerImp : MapperBeer<Beer, BeerDto> {
 

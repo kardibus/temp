@@ -1,19 +1,38 @@
 package com.kardibus.temp.model.programbeer
 
+import com.kardibus.temp.model.BaseModelUUID
+import jdk.jfr.Label
+import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
+/**
+ * Программа для пивоварни
+ */
 @Entity
-class Program {
-    @Id
-    @GeneratedValue
-    var id: Long? = null
-    var name: String? = null
-    var work: Boolean = false
-    var pause: Boolean = true
+@Table(name = "program")
+open class Program : BaseModelUUID() {
 
-    override fun toString(): String {
-        return "Program(id=$id, name=$name, work=$work)"
-    }
+    @Column(name = "name", nullable = false)
+    @NotNull
+    @Label("Название программы")
+    lateinit var name: String
+
+    @Column(name = "work")
+    @Label("Признак работы")
+    var work: Boolean = false
+
+    @Column(name = "pause")
+    @Label("Признак паузы")
+    var pause: Boolean = false
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "step_id", nullable = false)
+    @NotNull
+    @Label("Ссылка на шаг")
+    lateinit var step: Step
 }

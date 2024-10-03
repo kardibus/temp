@@ -1,42 +1,37 @@
 package com.kardibus.temp.service
 
-import com.kardibus.temp.dao.ProgramDao
-import com.kardibus.temp.model.Model
+import com.kardibus.temp.dao.ProgramService
+import com.kardibus.temp.model.brewery.DataWork
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ModelRepository
 import com.kardibus.temp.repository.StepRepository
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class ProgramService(
-    private var programDao: ProgramDao,
+    private var programService: ProgramService,
     private var modelRepository: ModelRepository,
     private var stepRepository: StepRepository
 ) {
 
-    @Scheduled(fixedRate = 40000)
     fun timeWorkProgram() {
         var program = getProgram()
         var date = LocalDateTime.now()
 
         if (program.work && !program.pause) {
-            val steps = programDao.getStepByProg_idNotDone(program.id!!.toLong())
+            programService.getStepByProg_idNotDone(program.id!!.toLong()).map { s ->
+                if (s == null) {
+                    programService.updateProgram(
+                        program.apply {
+                            work = false
+                        }
+                    )
+                }
 
-            if (steps.isEmpty()) {
-                programDao.updateProgram(
-                    program.apply {
-                        work = false
-                    }
-                )
-            }
-
-            steps.stream().map { s ->
                 if (s.fromDate == null && !s.done && s.toDate == null) {
-                    programDao.saveStep(
+                    programService.saveStep(
                         s.apply {
                             fromDate = date
                             toDate = date.plusMinutes(s.time!!.toLong())
@@ -44,7 +39,7 @@ class ProgramService(
                     )
                 }
                 if (s.toDate!!.isBefore(date)) {
-                    programDao.saveStep(
+                    programService.saveStep(
                         s.apply {
                             done = true
                         }
@@ -55,9 +50,8 @@ class ProgramService(
         }
 
         if (program.work && program.pause) {
-            val steps = programDao.getStepByProg_idNotDone(program.id!!.toLong())
-            steps.stream().map { s ->
-                programDao.saveStep(
+            programService.getStepByProg_idNotDone(program.id!!.toLong()).map { s ->
+                programService.saveStep(
                     s.apply {
                         toDate = s.toDate!!.plusSeconds(40)
                     }
@@ -79,7 +73,6 @@ class ProgramService(
         }
     }
 
-    @CacheEvict(value = ["name"], allEntries = true)
     fun model(program: Program, steps: Step) {
         val model = modelRepository.findByProg().get()
 
@@ -93,6 +86,6 @@ class ProgramService(
         )
     }
 
-    fun getProgram() = if (!programDao.getProgramTrue().isEmpty) programDao.getProgramTrue().get() else Program()
-    fun getModel() = if (!modelRepository.findByProg().isEmpty) modelRepository.findByProg().get() else Model()
+    fun getProgram() = if (!programService.getProgramTrue().isEmpty) programService.getProgramTrue().get() else Program()
+    fun getModel() = if (!modelRepository.findByProg().isEmpty) modelRepository.findByProg().get() else DataWork()
 }

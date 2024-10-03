@@ -3,8 +3,10 @@ package com.kardibus.temp.repository
 import com.kardibus.temp.model.programbeer.Step
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
+import java.util.stream.Stream
 
-@org.springframework.stereotype.Repository
+@Repository
 interface StepRepository : JpaRepository<Step, Long> {
 
     @Query("select s from Step s where s.prog_id = :id order by s.step")

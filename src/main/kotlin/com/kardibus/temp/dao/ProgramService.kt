@@ -9,11 +9,11 @@ import com.kardibus.temp.repository.StepRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import kotlin.streams.toList
+import java.util.stream.Stream
 
 @Component
 @Transactional
-class ProgramDao(private val programRepository: ProgramRepository, private var stepRepository: StepRepository) {
+class ProgramService(private val programRepository: ProgramRepository, private var stepRepository: StepRepository) {
 
     fun getAllProgram(): List<ProgramDto> {
         var list: MutableList<ProgramDto> = ArrayList()
@@ -96,7 +96,7 @@ class ProgramDao(private val programRepository: ProgramRepository, private var s
         return programRepository.getProgEnable()
     }
 
-    fun getStepByProg_idNotDone(id: Long): List<Step> {
+    fun getStepByProg_idNotDone(id: Long): Stream<Step> {
         return stepRepository.findByProg_idNotDone(id)
     }
 

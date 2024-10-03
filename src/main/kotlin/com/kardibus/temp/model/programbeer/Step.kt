@@ -1,29 +1,43 @@
 package com.kardibus.temp.model.programbeer
 
+import com.kardibus.temp.model.BaseModelUUID
+import jdk.jfr.Label
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
+/**
+ * Шаг для программы
+ */
 @Entity
-class Step {
-    @Id
-    @GeneratedValue
-    var id: Long? = null
-    var step: Long? = null
-    var time: Long? = null
+@Table(name = "step")
+open class Step : BaseModelUUID() {
 
-    @Column(name = "from_Date")
-    var fromDate: LocalDateTime? = null
+    @Column(name = "step", nullable = false)
+    @NotNull
+    @Label("Шаг")
+    var step: Int = 0
 
-    @Column(name = "to_Date")
-    var toDate: LocalDateTime? = null
+    @Column(name = "time")
+    @Label("Время выполнения")
+    var time: Int = 0
+
+    @Column(name = "date_start")
+    @Label("Дата начала")
+    var dateStart: LocalDateTime? = LocalDateTime.now()
+
+    @Column(name = "date_end", nullable = false)
+    @NotNull
+    @Label("Дата окончания")
+    lateinit var dateEnd: LocalDateTime
+
+    @Column(name = "done")
+    @Label("Признак выполненого шага")
     var done: Boolean = false
-    var temp: Long = 0
-    var prog_id: Long? = null
 
-    override fun toString(): String {
-        return "step{id=$id, step=$step, time=$time}"
-    }
+    @Column(name = "temp")
+    @Label("Температура шага")
+    var temp: Long = 0
 }
