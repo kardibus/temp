@@ -1,43 +1,55 @@
 package com.kardibus.temp.model.programbeer
 
-import com.kardibus.temp.model.BaseModelUUID
-import jdk.jfr.Label
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
-import javax.validation.constraints.NotNull
+import java.util.UUID
+import jdk.jfr.Label
+import org.hibernate.annotations.UuidGenerator
 
 /**
  * Шаг для программы
  */
 @Entity
 @Table(name = "step")
-open class Step : BaseModelUUID() {
+open class Step {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    @Column(name = "id", unique = true)
+    open lateinit var id: UUID
 
     @Column(name = "step", nullable = false)
     @NotNull
     @Label("Шаг")
-    var step: Int = 0
+    open var step: Int = 0
 
     @Column(name = "time")
     @Label("Время выполнения")
-    var time: Int = 0
+    open var time: Int = 0
 
     @Column(name = "date_start")
     @Label("Дата начала")
-    var dateStart: LocalDateTime? = LocalDateTime.now()
+    open var dateStart: LocalDateTime? = null
 
-    @Column(name = "date_end", nullable = false)
-    @NotNull
+    @Column(name = "date_end")
     @Label("Дата окончания")
-    lateinit var dateEnd: LocalDateTime
+    open var dateEnd: LocalDateTime? = null
 
     @Column(name = "done")
     @Label("Признак выполненого шага")
-    var done: Boolean = false
+    open var done: Boolean = false
+
+    @Column(name = "work")
+    @Label("Признак работы")
+    open var work: Boolean = false
 
     @Column(name = "temp")
     @Label("Температура шага")
-    var temp: Long = 0
+    open var temp: Long = 0
 }

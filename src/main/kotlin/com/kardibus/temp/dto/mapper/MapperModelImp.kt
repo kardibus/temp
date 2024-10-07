@@ -1,25 +1,25 @@
 package com.kardibus.temp.dto.mapper
 
-import com.kardibus.temp.dto.ModelDto
+import com.kardibus.temp.dto.DataWorkDto
 import com.kardibus.temp.model.brewery.DataWork
 
-class MapperModelImp : MapperModel<DataWork, ModelDto> {
+class MapperModelImp : MapperModel<DataWork, DataWorkDto> {
 
-    override fun toModel(entity: DataWork): ModelDto {
-        return ModelDto().apply {
-            id = entity.id
-            prog = entity.prog
-            curr = entity.curr
-            temp = entity.temp
-            work = entity.work
-        }
+    override fun toModel(entity: DataWork): DataWorkDto {
+        return DataWorkDto(
+            entity.id,
+            entity.program,
+            entity.currentStep,
+            entity.temp,
+            entity.work,
+        )
     }
 
-    override fun fromModel(domain: ModelDto): DataWork {
+    override fun fromModel(domain: DataWorkDto): DataWork {
         return DataWork().apply {
             id = domain.id
-            prog = domain.prog
-            curr = domain.curr
+            program = domain.prog
+            currentStep = domain.curr
             temp = domain.temp
             work = domain.work
         }

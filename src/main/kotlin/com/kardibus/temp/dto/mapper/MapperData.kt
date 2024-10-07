@@ -1,6 +1,6 @@
 package com.kardibus.temp.dto.mapper
 
-interface MapperBeer<E, D> {
+interface MapperData<E, D> {
 
     fun toProgram(entity: E): D
 

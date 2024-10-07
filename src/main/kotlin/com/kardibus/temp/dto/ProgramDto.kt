@@ -1,12 +1,12 @@
 package com.kardibus.temp.dto
 
 import com.kardibus.temp.model.programbeer.Step
+import java.util.UUID
 
-class ProgramDto {
-
-    var id: Long? = null
-    var name: String? = null
-    var work: Boolean = false
-
-    var steps: List<Step>? = null
-}
+data class ProgramDto(
+    var id: UUID,
+    var name: String,
+    var work: Boolean,
+    var pause: Boolean,
+    var steps: MutableList<Step>
+)

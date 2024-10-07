@@ -1,38 +1,46 @@
 package com.kardibus.temp.model.programbeer
 
-import com.kardibus.temp.model.BaseModelUUID
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
+import jakarta.validation.constraints.NotNull
+import java.util.UUID
 import jdk.jfr.Label
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.Table
-import javax.validation.constraints.NotNull
+import org.hibernate.annotations.UuidGenerator
 
 /**
  * Программа для пивоварни
  */
 @Entity
 @Table(name = "program")
-open class Program : BaseModelUUID() {
+open class Program {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    @Column(name = "id", unique = true)
+    open lateinit var id: UUID
 
     @Column(name = "name", nullable = false)
     @NotNull
     @Label("Название программы")
-    lateinit var name: String
+    open lateinit var name: String
 
     @Column(name = "work")
     @Label("Признак работы")
-    var work: Boolean = false
+    open var work: Boolean = false
 
     @Column(name = "pause")
     @Label("Признак паузы")
-    var pause: Boolean = false
+    open var pause: Boolean = false
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "step_id", nullable = false)
-    @NotNull
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "program_id")
     @Label("Ссылка на шаг")
-    lateinit var step: Step
+    open var steps: MutableList<Step>? = null
 }
