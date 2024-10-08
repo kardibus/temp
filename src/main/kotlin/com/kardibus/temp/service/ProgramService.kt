@@ -2,6 +2,7 @@ package com.kardibus.temp.service
 
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.repository.ProgramRepository
+import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Service
 @Service
 class ProgramService(
     private var programRepository: ProgramRepository,
+    private val clock: Clock,
 ) {
 
     fun calculateTimeWorkProgram(program: Program): Program {
-        var date = LocalDateTime.now()
+        var date = LocalDateTime.now(clock)
 
         if (program.work && !program.pause) {
             program.steps?.filter { !it.done && it.work }?.map { step ->

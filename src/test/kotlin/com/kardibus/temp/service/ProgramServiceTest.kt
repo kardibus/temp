@@ -3,7 +3,9 @@ package com.kardibus.temp.service
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
-import com.kardibus.temp.repository.StepRepository
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -12,14 +14,17 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 internal class ProgramServiceTest @Autowired constructor(
-    private val programRepository: ProgramRepository,
-    private val programService: ProgramService,
-    private val stepRepository: StepRepository,
+    private val programRepository: ProgramRepository
 ) {
 
     @Test
     @DisplayName("")
     fun calculateTimeWorkProgram() {
+        val fixedInstant = Instant.parse("2024-01-01T00:00:00Z")
+        val clock = Clock.fixed(fixedInstant, ZoneOffset.UTC)
+
+        val programService = ProgramService(programRepository, clock)
+
         val step = Step().apply {
             time = 1
             step = 1
@@ -40,9 +45,10 @@ internal class ProgramServiceTest @Autowired constructor(
 
         assertEquals(false, result.steps?.first()?.done)
 
-        Thread.sleep(60000)
+        val advancedClock = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
+        val programServiceAdvanced = ProgramService(programRepository, advancedClock)
 
-        val resultTwo = programService.calculateTimeWorkProgram(program = result)
+        val resultTwo = programServiceAdvanced.calculateTimeWorkProgram(program = result)
 
         assertEquals(true, resultTwo.steps?.first()?.done)
     }
@@ -50,6 +56,11 @@ internal class ProgramServiceTest @Autowired constructor(
     @Test
     @DisplayName("Проверяем работу пазузы и перерасчет времени окончания работы шага")
     fun calculatePauseProgram() {
+        val fixedInstant = Instant.parse("2024-01-01T00:00:00Z")
+        val clock = Clock.fixed(fixedInstant, ZoneOffset.UTC)
+
+        val programService = ProgramService(programRepository, clock)
+
         val step = Step().apply {
             time = 1
             step = 1
@@ -74,9 +85,9 @@ internal class ProgramServiceTest @Autowired constructor(
         assertEquals(true, result.pause)
         assertEquals(true, result.work)
 
-        Thread.sleep(60000)
-
-        val result2 = programService.calculateTimeWorkProgram(program = result)
+        val clock2 = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
+        val programService2 = ProgramService(programRepository, clock2)
+        val result2 = programService2.calculateTimeWorkProgram(program = result)
 
         assertEquals(false, result2.steps?.first()?.done)
         assertEquals(true, result2.steps?.first()?.work)
@@ -84,9 +95,11 @@ internal class ProgramServiceTest @Autowired constructor(
         assertEquals(true, result2.pause)
         assertEquals(true, result2.work)
 
-        Thread.sleep(30000)
         result2.pause = false
-        val result3 = programService.calculateTimeWorkProgram(program = result2)
+
+        val clock3 = Clock.fixed(fixedInstant.plusSeconds(91), ZoneOffset.UTC)
+        val programService3 = ProgramService(programRepository, clock3)
+        val result3 = programService3.calculateTimeWorkProgram(program = result2)
 
         assertEquals(false, result3.steps?.first()?.done)
         assertEquals(true, result3.steps?.first()?.work)
@@ -94,10 +107,13 @@ internal class ProgramServiceTest @Autowired constructor(
         assertEquals(false, result3.pause)
         assertEquals(true, result3.work)
 
-        val result4 = programService.calculateTimeWorkProgram(program = result3)
-        Thread.sleep(30000)
+        val clock4 = Clock.fixed(fixedInstant.plusSeconds(121), ZoneOffset.UTC)
+        val programService4 = ProgramService(programRepository, clock4)
+        val result4 = programService4.calculateTimeWorkProgram(program = result3)
 
-        val result5 = programService.calculateTimeWorkProgram(program = result4)
+        val clock5 = Clock.fixed(fixedInstant.plusSeconds(151), ZoneOffset.UTC)
+        val programService5 = ProgramService(programRepository, clock5)
+        val result5 = programService5.calculateTimeWorkProgram(program = result4)
 
         assertEquals(true, result5.steps?.first()?.done)
         assertEquals(false, result5.steps?.first()?.work)
