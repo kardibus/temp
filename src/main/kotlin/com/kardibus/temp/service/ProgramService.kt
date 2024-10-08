@@ -22,17 +22,20 @@ class ProgramService(
         if (program.work && !program.pause) {
             program.steps?.filter { !it.done && it.work }?.map { step ->
 
-                if (step.dateStart == null && !step.done && step.work) {
+                if (step.dateStart == null) {
                     step.dateStart = date
                     step.dateEnd = date.plusMinutes(step.time.toLong())
                 }
+
                 if (step.dateEnd!!.isBefore(date)) {
                     step.done = true
                     step.work = false
                 }
+
             }
         } else if (program.work && program.pause) {
             program.steps?.filter { step -> !step.done && step.work }?.map { step ->
+
                 if (step.dateStart == null) {
                     step.dateStart = date
                 }
