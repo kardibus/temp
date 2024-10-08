@@ -23,19 +23,24 @@ class ProgramService(
                 if (step.dateStart == null && !step.done && step.work) {
                     step.dateStart = date
                     step.dateEnd = date.plusMinutes(step.time.toLong())
-
-                    programRepository.save(program)
                 }
                 if (step.dateEnd!!.isBefore(date)) {
                     step.done = true
                     step.work = false
-                    programRepository.save(program)
                 }
-            }?.toList()
+            }
         } else if (program.work && program.pause) {
             program.steps?.filter { step -> !step.done && step.work }?.map { step ->
+                if (step.dateStart == null) {
+                    step.dateStart = date
+                }
 
-                val time = Duration.between(date, step.dateEnd)
+                if (step.dateEnd == null) {
+                    step.dateEnd = date.plusMinutes(step.time.toLong())
+                }
+
+                val time = Duration.between(step.dateStart, step.dateEnd)
+                step.dateStart = date
                 step.dateEnd = date.plus(time)
             }
             programRepository.save(program)
