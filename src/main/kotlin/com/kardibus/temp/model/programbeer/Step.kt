@@ -1,7 +1,10 @@
 package com.kardibus.temp.model.programbeer
 
+import com.kardibus.temp.model.AudiListener
+import com.kardibus.temp.model.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.Table
@@ -15,41 +18,36 @@ import org.hibernate.annotations.UuidGenerator
  * Шаг для программы
  */
 @Entity
+@EntityListeners(AudiListener::class)
 @Table(name = "step")
-open class Step {
+open class Step: BaseEntity() {
 
-    @Id
-    @GeneratedValue
-    @UuidGenerator(style = UuidGenerator.Style.TIME)
-    @Column(name = "id", unique = true)
-    open lateinit var id: UUID
-
+    /** Шаг */
     @Column(name = "step", nullable = false)
     @NotNull
-    @Label("Шаг")
     open var step: Int = 0
 
+    /** Время выполнения */
     @Column(name = "time")
-    @Label("Время выполнения")
     open var time: Int = 0
 
+    /** Дата начала */
     @Column(name = "date_start")
-    @Label("Дата начала")
     open var dateStart: LocalDateTime? = null
 
+    /** Дата окончания */
     @Column(name = "date_end")
-    @Label("Дата окончания")
     open var dateEnd: LocalDateTime? = null
 
+    /** Признак выполненого шага */
     @Column(name = "done")
-    @Label("Признак выполненого шага")
     open var done: Boolean = false
 
+    /** Признак работы */
     @Column(name = "work")
-    @Label("Признак работы")
     open var work: Boolean = false
 
+    /** Температура шага */
     @Column(name = "temp")
-    @Label("Температура шага")
     open var temp: Long = 0
 }

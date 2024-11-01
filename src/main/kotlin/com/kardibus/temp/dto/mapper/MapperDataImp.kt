@@ -6,13 +6,12 @@ import com.kardibus.temp.model.brewery.Data
 class MapperDataImp : MapperData<Data, DataDto> {
 
     override fun toProgram(entity: Data): DataDto {
-        return DataDto(entity.temp, entity.date)
+        return DataDto(entity.temp)
     }
 
     override fun fromProgram(domain: DataDto): Data {
         return Data().apply {
             temp = domain.temp
-            date = domain.date
         }
     }
 }

@@ -12,7 +12,6 @@ class DataService(private val dataRepository: DataRepository) {
     fun saveData(data: DataDto) {
         dataRepository.save(Data().apply {
             temp = data.temp
-            date = LocalDateTime.now()
         })
     }
 }

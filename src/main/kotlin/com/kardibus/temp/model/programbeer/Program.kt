@@ -1,8 +1,11 @@
 package com.kardibus.temp.model.programbeer
 
+import com.kardibus.temp.model.AudiListener
+import com.kardibus.temp.model.BaseEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
@@ -17,30 +20,25 @@ import org.hibernate.annotations.UuidGenerator
  * Программа для пивоварни
  */
 @Entity
+@EntityListeners(AudiListener::class)
 @Table(name = "program")
-open class Program {
+open class Program: BaseEntity() {
 
-    @Id
-    @GeneratedValue
-    @UuidGenerator(style = UuidGenerator.Style.TIME)
-    @Column(name = "id", unique = true)
-    open lateinit var id: UUID
-
+    /** Название программы */
     @Column(name = "name", nullable = false)
     @NotNull
-    @Label("Название программы")
     open lateinit var name: String
 
+    /** Признак работы */
     @Column(name = "work")
-    @Label("Признак работы")
     open var work: Boolean = false
 
+    /** Признак паузы */
     @Column(name = "pause")
-    @Label("Признак паузы")
     open var pause: Boolean = false
 
+    /** Ссылка на шаг */
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "program_id")
-    @Label("Ссылка на шаг")
     open var steps: MutableList<Step>? = null
 }
