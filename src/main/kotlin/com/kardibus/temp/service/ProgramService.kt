@@ -2,9 +2,11 @@ package com.kardibus.temp.service
 
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.repository.ProgramRepository
+import com.kardibus.temp.repository.StepRepository
 import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
+import java.util.UUID
 import org.springframework.stereotype.Service
 
 /**
@@ -12,15 +14,16 @@ import org.springframework.stereotype.Service
  */
 @Service
 class ProgramService(
-    private var programRepository: ProgramRepository,
+    private val programRepository: ProgramRepository,
     private val clock: Clock,
 ) {
 
-    fun calculateTimeWorkProgram(program: Program): Program {
+    fun calculateTimeWorkProgram(id: UUID): Program {
+        val program = programRepository.findProgramById(id = id)
         var date = LocalDateTime.now(clock)
 
         if (program.work && !program.pause) {
-            program.steps?.filter { !it.done && it.work }?.map { step ->
+            program.steps.filter { !it.done && it.work }.map { step ->
 
                 if (step.dateStart == null) {
                     step.dateStart = date
@@ -34,7 +37,7 @@ class ProgramService(
 
             }
         } else if (program.work && program.pause) {
-            program.steps?.filter { step -> !step.done && step.work }?.map { step ->
+            program.steps.filter { step -> !step.done && step.work }.map { step ->
 
                 if (step.dateStart == null) {
                     step.dateStart = date
@@ -48,9 +51,8 @@ class ProgramService(
                 step.dateStart = date
                 step.dateEnd = date.plus(time)
             }
-            programRepository.save(program)
         }
-
+        programRepository.save(program)
         return program
     }
 }

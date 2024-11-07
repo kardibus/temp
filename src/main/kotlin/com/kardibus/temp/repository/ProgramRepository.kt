@@ -12,7 +12,7 @@ interface ProgramRepository : JpaRepository<Program, UUID> {
     @Query(
         """ 
         select p from Program p 
-            join p.steps s
+            join fetch p.steps s
             where p.id = :id
     """
     )

@@ -4,8 +4,8 @@ import java.util.UUID
 
 data class DataWorkDto(
     var id: UUID,
-    var prog: Long,
-    var curr: Long,
+    var prog: Int = 0,
+    var curr: Int = 0,
     var temp: Double,
     var work: Boolean,
 )

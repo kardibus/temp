@@ -49,5 +49,5 @@ open class Step: BaseEntity() {
 
     /** Температура шага */
     @Column(name = "temp")
-    open var temp: Long = 0
+    open var temp: Double = 0.0
 }
