@@ -9,7 +9,7 @@ class DataWorkService(private val programService: ProgramService) {
 
     fun getDataWork(id: UUID): DataWorkDto? {
         val program = programService.calculateTimeWorkProgram(id = id)
-        val step = program.steps.filter { step -> !step.done }.first()
+        val step = program.steps.filter { step -> !step.done }.sortedBy { step -> step.step }.first()
 
         return DataWorkDto(
             id = program.id,

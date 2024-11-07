@@ -4,7 +4,7 @@
 create table data
 (
     id   uuid not null,
-    date timestamp(6),
+    createdAt timestamp(6),
     temp float(53),
     primary key (id)
 );
@@ -12,6 +12,7 @@ create table data
 create table data_work
 (
     id           uuid not null,
+    createdAt timestamp(6),
     current_step bigint,
     program      bigint,
     temp         float(53),
@@ -22,6 +23,7 @@ create table data_work
 create table program
 (
     id    uuid         not null,
+    createdAt timestamp(6),
     name  varchar(255) not null,
     pause boolean,
     work  boolean,
@@ -31,6 +33,7 @@ create table program
 create table step
 (
     id         uuid         not null,
+    createdAt timestamp(6),
     date_end   timestamp(6),
     date_start timestamp(6),
     done       boolean,
@@ -43,4 +46,4 @@ create table step
 );
 
 alter table if exists step
-    add constraint fk_step foreign key (step_id) references program;
+    add constraint fk_step foreign key (program_id) references program;

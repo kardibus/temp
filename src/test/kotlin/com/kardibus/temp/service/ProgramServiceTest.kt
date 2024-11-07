@@ -25,18 +25,25 @@ internal class ProgramServiceTest @Autowired constructor(
 
         val programService = ProgramService(programRepository, clock)
 
-        val step = Step().apply {
+        val step1 = Step().apply {
             time = 1
             step = 1
             temp = 10.0
             done = false
             work = true
         }
+        val step2 = Step().apply {
+            time = 1
+            step = 2
+            temp = 10.0
+            done = false
+            work = false
+        }
         val program = Program().apply {
             pause = false
             work = true
             name = "test"
-            steps = mutableListOf(step)
+            steps = mutableListOf(step1,step2)
         }
 
         programRepository.save(program)
@@ -61,18 +68,25 @@ internal class ProgramServiceTest @Autowired constructor(
 
         val programService = ProgramService(programRepository, clock)
 
-        val step = Step().apply {
+        val step1 = Step().apply {
             time = 1
             step = 1
             temp = 10.0
             done = false
             work = true
         }
+        val step2 = Step().apply {
+            time = 1
+            step = 2
+            temp = 10.0
+            done = false
+            work = false
+        }
         val program = Program().apply {
             pause = true
             work = true
             name = "test"
-            steps = mutableListOf(step)
+            steps = mutableListOf(step1,step2)
         }
 
         programRepository.save(program)
