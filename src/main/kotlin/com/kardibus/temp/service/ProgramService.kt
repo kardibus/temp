@@ -18,11 +18,11 @@ class ProgramService(
 ) {
 
     fun calculateTimeWorkProgram(id: UUID): Program {
-        val program = programRepository.findProgramById(id = id)
+        val program = programRepository.findProgramByUserId(id = id)
         var date = LocalDateTime.now(clock)
 
         if (program.work && !program.pause) {
-            program.steps.filter { step ->  !step.done && step.work }.sortedBy { step -> step.step }.map { step ->
+            program.steps.filter { step -> !step.done && step.work }.sortedBy { step -> step.step }.map { step ->
 
                 if (step.dateStart == null) {
                     step.dateStart = date

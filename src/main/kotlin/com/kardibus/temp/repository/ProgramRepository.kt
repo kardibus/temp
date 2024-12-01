@@ -11,15 +11,16 @@ interface ProgramRepository : JpaRepository<Program, UUID> {
 
     @Query(
         """ 
-        select p from Program p
+        select p from UserBrewery u
+            join u.programs p
             join fetch p.steps s
-            where p.id = :id
+            where u.id = :id
             order by p.id, s.id, s.step
     """
     )
-    fun findProgramById(id: UUID): Program
+    fun findProgramByUserId(id: UUID): Program
 
-    @Query(
+    @Query(value =
         """
         select p from Program p
             join fetch p.steps s

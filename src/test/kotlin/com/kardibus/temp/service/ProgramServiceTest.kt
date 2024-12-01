@@ -2,7 +2,9 @@ package com.kardibus.temp.service
 
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
+import com.kardibus.temp.model.programbeer.UserBrewery
 import com.kardibus.temp.repository.ProgramRepository
+import com.kardibus.temp.repository.UserBreweryRepository
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
@@ -14,7 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 internal class ProgramServiceTest @Autowired constructor(
-    private val programRepository: ProgramRepository
+    private val programRepository: ProgramRepository,
+    private val userBreweryRepository: UserBreweryRepository,
 ) {
 
     @Test
@@ -46,16 +49,21 @@ internal class ProgramServiceTest @Autowired constructor(
             steps = mutableListOf(step1,step2)
         }
 
-        programRepository.save(program)
+        val userBrewery = UserBrewery().apply {
+            name = "test"
+            programs = mutableListOf(program)
+        }
 
-        val result = programService.calculateTimeWorkProgram(program.id)
+        userBreweryRepository.save(userBrewery)
+
+        val result = programService.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(false, result.steps.first().done)
 
         val advancedClock = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
         val programServiceAdvanced = ProgramService(programRepository, advancedClock)
 
-        val resultTwo = programServiceAdvanced.calculateTimeWorkProgram(result.id)
+        val resultTwo = programServiceAdvanced.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(true, resultTwo.steps.first().done)
     }
@@ -89,9 +97,14 @@ internal class ProgramServiceTest @Autowired constructor(
             steps = mutableListOf(step1,step2)
         }
 
-        programRepository.save(program)
+        val userBrewery = UserBrewery().apply {
+            name = "test"
+            programs = mutableListOf(program)
+        }
 
-        val result = programService.calculateTimeWorkProgram(program.id)
+        userBreweryRepository.save(userBrewery)
+
+        val result = programService.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(false, result.steps.first().done)
         assertEquals(true, result.steps.first().work)
@@ -101,7 +114,7 @@ internal class ProgramServiceTest @Autowired constructor(
 
         val clock2 = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
         val programService2 = ProgramService(programRepository, clock2)
-        val result2 = programService2.calculateTimeWorkProgram(result.id)
+        val result2 = programService2.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(false, result2.steps.first().done)
         assertEquals(true, result2.steps.first().work)
@@ -115,7 +128,7 @@ internal class ProgramServiceTest @Autowired constructor(
 
         val clock3 = Clock.fixed(fixedInstant.plusSeconds(91), ZoneOffset.UTC)
         val programService3 = ProgramService(programRepository, clock3)
-        val result3 = programService3.calculateTimeWorkProgram(result2.id)
+        val result3 = programService3.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(false, result3.steps.first().done)
         assertEquals(true, result3.steps.first().work)
@@ -125,11 +138,11 @@ internal class ProgramServiceTest @Autowired constructor(
 
         val clock4 = Clock.fixed(fixedInstant.plusSeconds(121), ZoneOffset.UTC)
         val programService4 = ProgramService(programRepository, clock4)
-        val result4 = programService4.calculateTimeWorkProgram(result3.id)
+        val result4 = programService4.calculateTimeWorkProgram(userBrewery.id)
 
         val clock5 = Clock.fixed(fixedInstant.plusSeconds(151), ZoneOffset.UTC)
         val programService5 = ProgramService(programRepository, clock5)
-        val result5 = programService5.calculateTimeWorkProgram(result4.id)
+        val result5 = programService5.calculateTimeWorkProgram(userBrewery.id)
 
         assertEquals(true, result5.steps.first().done)
         assertEquals(false, result5.steps.first().work)

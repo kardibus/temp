@@ -1,6 +1,6 @@
 package com.kardibus.temp.dto
 
-import java.util.UUID
+import java.util.*
 
 data class DataWorkDto(
     var id: UUID,

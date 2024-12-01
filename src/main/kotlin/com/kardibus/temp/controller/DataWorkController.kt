@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 
 /** Отдаем микроконтроллеру готовую программу */
 @RestController
-@RequestMapping("/work")
-class DataWorkController(private val dataWorkService: DataWorkService) {
+@RequestMapping("/v1/work")
+open class DataWorkController(private val dataWorkService: DataWorkService) {
 
-    @GetMapping("/v1/{id}")
+    @GetMapping("{id}")
     fun dataWork(@PathVariable id: UUID): DataWorkDto? {
-        return dataWorkService.getDataWork(id)
+        return dataWorkService.getDataWorkForUser(id)
     }
 }
