@@ -1,8 +1,8 @@
 package com.kardibus.temp.service
 
+import com.kardibus.temp.dto.ProgramDto
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.repository.ProgramRepository
-import com.kardibus.temp.repository.StepRepository
 import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
@@ -19,11 +19,11 @@ class ProgramService(
 ) {
 
     fun calculateTimeWorkProgram(id: UUID): Program {
-        val program = programRepository.findProgramById(id = id)
+        val program = programRepository.findProgramByUserId(id = id)
         var date = LocalDateTime.now(clock)
 
         if (program.work && !program.pause) {
-            program.steps.filter { !it.done && it.work }.map { step ->
+            program.steps.filter { step -> !step.done && step.work }.sortedBy { step -> step.step }.map { step ->
 
                 if (step.dateStart == null) {
                     step.dateStart = date
@@ -37,7 +37,7 @@ class ProgramService(
 
             }
         } else if (program.work && program.pause) {
-            program.steps.filter { step -> !step.done && step.work }.map { step ->
+            program.steps.filter { step -> !step.done && step.work }.sortedBy { step -> step.step }.map { step ->
 
                 if (step.dateStart == null) {
                     step.dateStart = date
@@ -54,5 +54,16 @@ class ProgramService(
         }
         programRepository.save(program)
         return program
+    }
+
+    fun getPrograms() : List<ProgramDto> {
+       val program = programRepository.findAll()
+        return program.map { ProgramDto(
+            id = it.id,
+            name = it.name,
+            work = it.work,
+            pause = it.pause,
+            steps = it.steps
+        ) }
     }
 }

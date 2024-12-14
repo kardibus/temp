@@ -9,7 +9,7 @@ import java.util.UUID
 import org.hibernate.annotations.UuidGenerator
 
 @MappedSuperclass
-open class BaseEntity {
+abstract class BaseEntity {
 
     @Id
     @GeneratedValue
@@ -18,6 +18,6 @@ open class BaseEntity {
     open lateinit var id: UUID
 
     /** Дата получения температуры */
-    @Column(name = "date")
+    @Column(name = "createdAt")
     open lateinit var createdAt: LocalDateTime
 }

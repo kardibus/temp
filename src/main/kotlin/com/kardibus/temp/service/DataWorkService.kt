@@ -5,18 +5,30 @@ import java.util.UUID
 import org.springframework.stereotype.Service
 
 @Service
-class DataWorkService(private val programService: ProgramService) {
+class DataWorkService(
+    private val programService: ProgramService,
+) {
 
-    fun getDataWork(id: UUID): DataWorkDto? {
+    fun getDataWorkForUser(id: UUID): DataWorkDto {
         val program = programService.calculateTimeWorkProgram(id = id)
-        val step = program.steps.filter { step -> !step.done }.first()
-
+        val step = program.steps
+            .filter { step -> !step.done }
+            .sortedBy { step -> step.step }
+        if (step.isEmpty()) {
+            return DataWorkDto(
+                id = program.id,
+                prog = program.steps.size,
+                curr = 0,
+                temp = 0.0,
+                work = false
+            )
+        }
         return DataWorkDto(
             id = program.id,
             prog = program.steps.size,
-            curr = step.step,
-            temp = step.temp,
-            work = step.work
+            curr = step.first().step,
+            temp = step.first().temp,
+            work = step.first().work
         )
     }
 }
