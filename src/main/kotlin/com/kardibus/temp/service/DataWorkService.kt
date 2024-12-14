@@ -9,12 +9,12 @@ class DataWorkService(
     private val programService: ProgramService,
 ) {
 
-    fun getDataWorkForUser(id: UUID): DataWorkDto? {
+    fun getDataWorkForUser(id: UUID): DataWorkDto {
         val program = programService.calculateTimeWorkProgram(id = id)
         val step = program.steps
             .filter { step -> !step.done }
             .sortedBy { step -> step.step }
-        if (step.isNullOrEmpty()) {
+        if (step.isEmpty()) {
             return DataWorkDto(
                 id = program.id,
                 prog = program.steps.size,

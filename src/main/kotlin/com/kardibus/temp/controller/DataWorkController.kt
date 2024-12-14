@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 open class DataWorkController(private val dataWorkService: DataWorkService) {
 
     @GetMapping("{id}")
-    fun dataWork(@PathVariable id: UUID): DataWorkDto? {
+    fun dataWork(@PathVariable id: UUID): DataWorkDto {
         return dataWorkService.getDataWorkForUser(id)
     }
 }

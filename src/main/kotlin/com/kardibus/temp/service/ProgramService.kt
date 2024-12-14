@@ -1,5 +1,6 @@
 package com.kardibus.temp.service
 
+import com.kardibus.temp.dto.ProgramDto
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.repository.ProgramRepository
 import java.time.Clock
@@ -53,5 +54,16 @@ class ProgramService(
         }
         programRepository.save(program)
         return program
+    }
+
+    fun getPrograms() : List<ProgramDto> {
+       val program = programRepository.findAll()
+        return program.map { ProgramDto(
+            id = it.id,
+            name = it.name,
+            work = it.work,
+            pause = it.pause,
+            steps = it.steps
+        ) }
     }
 }

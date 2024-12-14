@@ -1,21 +1,18 @@
 package com.kardibus.temp.controller
 
-import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import java.util.stream.Collectors
+import com.kardibus.temp.dto.ProgramDto
+import com.kardibus.temp.service.ProgramService
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 
-@RestController
+@Controller
 @RequestMapping("v1/program")
-open class ProgramController {
+class ProgramController(private val programService: ProgramService) {
 
-    @GetMapping("/user")
-    fun getUser(model: Model): String? {
-        val user = User("John Doe", 30)
-        model.addAttribute("user", user)
-        return "user"
+    @GetMapping("/")
+    fun getUser(model: MutableMap<String, List<ProgramDto>>): String {
+        model.put("Programs", programService.getPrograms())
+        return "program"
     }
-
-    data class User(val name: String,val age: Int)
 }
