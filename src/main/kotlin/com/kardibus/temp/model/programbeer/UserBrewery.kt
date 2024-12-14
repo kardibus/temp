@@ -1,6 +1,6 @@
 package com.kardibus.temp.model.programbeer
 
-import com.kardibus.temp.model.AudiListener
+import com.kardibus.temp.model.AuditListener
 import com.kardibus.temp.model.BaseEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Table(name = "user_brewery")
-@EntityListeners(AudiListener::class)
+@EntityListeners(AuditListener::class)
 @Entity
 open class UserBrewery : BaseEntity() {
 

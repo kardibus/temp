@@ -23,12 +23,12 @@ create table program
 
 create table step
 (
-    id              uuid    not null,
+    id              uuid           not null,
     created_at      timestamp(6),
     date_end        timestamp(6),
     date_start      timestamp(6),
     done            boolean,
-    step            integer not null,
+    step            integer unique not null,
     temp            float(53),
     time            integer,
     work            boolean,

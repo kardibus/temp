@@ -1,13 +1,13 @@
 package com.kardibus.temp.repository
 
 import com.kardibus.temp.model.programbeer.Program
-import java.util.*
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import java.util.*
 
 @Repository
-interface ProgramRepository : JpaRepository<Program, UUID> {
+interface ProgramRepository : CrudRepository<Program, UUID> {
 
     @Query(
         """ 
@@ -20,8 +20,9 @@ interface ProgramRepository : JpaRepository<Program, UUID> {
     )
     fun findProgramByUserId(id: UUID): Program
 
-    @Query(value =
-        """
+    @Query(
+        value =
+            """
         select p from Program p
             join fetch p.steps s
             where p.id = :id and s.work = false and s.done = false
