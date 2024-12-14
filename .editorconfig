@@ -1,0 +1,22 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{kt,kts}]
+kardibus_import_exclude = false
+kardibus_import_exclude_list = assertEquals
+# Указываем, для каких классов применять правило
+kardibus_alphabetical_constructor_classes = class
+# Включение отключение правила
+kardibus_alphabetical_constructor = false
+# Принудительное многострочное форматирование, если больше 2 параметров
+kardibus_alphabetical_constructor_force_multiline_parameter_count = 2

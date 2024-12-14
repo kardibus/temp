@@ -1,27 +1,27 @@
 package com.kardibus.temp.model.programbeer
 
-import com.kardibus.temp.model.AudiListener
+import com.kardibus.temp.model.AuditListener
 import com.kardibus.temp.model.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
-import java.util.UUID
-import jdk.jfr.Label
-import org.hibernate.annotations.UuidGenerator
 
 /**
  * Шаг для программы
  */
 @Entity
-@EntityListeners(AudiListener::class)
-@Table(name = "step")
-open class Step: BaseEntity() {
-
+@EntityListeners(AuditListener::class)
+@Table(
+    name = "step",
+    uniqueConstraints = [
+        UniqueConstraint(name = "uniqueConstraint_id_step", columnNames = ["id", "step"]),
+    ],
+)
+open class Step : BaseEntity() {
     /** Шаг */
     @Column(name = "step", nullable = false)
     @NotNull

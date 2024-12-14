@@ -1,0 +1,24 @@
+server:
+    port: 8084
+
+spring:
+    aop:
+        auto: true
+    datasource:
+        url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/brewery}
+        username: ${SPRING_DATASOURCE_USERNAME:postgres}
+        password: ${SPRING_DATASOURCE_PASSWORD:12345678}
+    jpa:
+        generate-ddl: true
+        show-sql: true
+        defer-datasource-initialization: false
+        properties:
+            hibernate:
+                jdbc:
+                    lob:
+                    non_contextual_creation: true
+        open-in-view: false
+    hibernate:
+        ddl-auto: update
+    liquibase:
+        change-log: classpath:liquibase/changelog-master.xml

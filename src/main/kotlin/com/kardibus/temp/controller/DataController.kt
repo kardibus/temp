@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 /** Принимаем температуру с датчика микроконтроллера */
 @RestController
 @RequestMapping("/data")
-open class DataController(private val dataService: DataService) {
-
+class DataController(private val dataService: DataService) {
     @PostMapping("/v1")
-    fun data(@RequestBody data: DataDto) {
+    fun data(
+        @RequestBody data: DataDto,
+    ) {
         dataService.saveData(data)
     }
 }
