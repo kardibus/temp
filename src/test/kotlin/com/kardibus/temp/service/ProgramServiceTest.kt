@@ -14,7 +14,7 @@ import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
 
-open class ProgramServiceTest
+class ProgramServiceTest
     @Autowired
     constructor(
         private var programRepository: ProgramRepository,

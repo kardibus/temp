@@ -17,11 +17,12 @@ dependencies {
 
     ktlintRuleset(project(":core-ktlint-rules"))
 
-    implementation("org.springframework.boot:spring-boot-starter:3.4.3")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.4.3")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.3")
-    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
-    implementation("org.springframework.boot:spring-boot-starter-aop:3.4.3")
+    implementation("org.springframework.boot:spring-boot-starter:3.5.3")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.5.3")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.3")
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.5.3")
+
+    implementation("jakarta.validation:jakarta.validation-api:3.1.1")
 
     // implementation("org.springframework.boot:spring-boot-starter-cache")
 
@@ -35,7 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 
     testImplementation("com.h2database:h2:2.3.232")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.5.3")
     testImplementation("org.assertj:assertj-core:3.27.0")
 }
 
