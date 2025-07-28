@@ -24,6 +24,8 @@ dependencies {
 
     implementation("jakarta.validation:jakarta.validation-api:3.1.1")
 
+    implementation("org.springframework.kafka:spring-kafka:3.3.8")
+
     // implementation("org.springframework.boot:spring-boot-starter-cache")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")

@@ -23,7 +23,5 @@ class ProgramController(private val programService: ProgramService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addProgram(
-        @RequestBody programDto: ProgramDto,
-    ) = programService.saveProgram(programDto)
+    fun addProgram(@RequestBody programDto: ProgramDto) = programService.saveProgram(programDto)
 }
