@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("v1/program")
+@RequestMapping("program/v1")
 class ProgramController(private val programService: ProgramService) {
+
     @GetMapping
     fun getProgram(): List<ProgramDto> = programService.getPrograms()
-
-    @GetMapping("getWork")
-    fun getWork(): Map<String, String> = mapNameToLabel<Work>()
 
     @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,7 +26,7 @@ class ProgramController(private val programService: ProgramService) {
     @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
     fun updateProgram(@RequestBody programDto: ProgramDto) {
-    println(programDto)
-    programService.updateProgram(programDto)
-}
+        println(programDto)
+        programService.updateProgram(programDto)
+    }
 }

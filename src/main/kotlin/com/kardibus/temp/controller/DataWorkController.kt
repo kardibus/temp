@@ -10,12 +10,10 @@ import java.util.UUID
 
 /** Отдаем микроконтроллеру готовую программу */
 @RestController
-@RequestMapping("/v1/work")
+@RequestMapping("work/v1")
 class DataWorkController(private val dataWorkService: DataWorkService) {
     @GetMapping("{id}")
-    fun dataWork(
-        @PathVariable id: UUID,
-    ): DataWorkDto {
+    fun dataWork(@PathVariable id: UUID): DataWorkDto {
         return dataWorkService.getDataWorkForUser(id)
     }
 }
