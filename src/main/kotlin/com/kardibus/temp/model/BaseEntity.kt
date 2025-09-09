@@ -12,7 +12,7 @@ abstract class BaseEntity {
     @Id
     @UuidGenerator
     @Column(name = "id", unique = true)
-    open lateinit var id: UUID
+    open var id: UUID? = null
 
     /** Дата получения температуры */
     @Column(name = "createdAt")

@@ -21,7 +21,14 @@ class ProgramController(private val programService: ProgramService) {
     @GetMapping("getWork")
     fun getWork(): Map<String, String> = mapNameToLabel<Work>()
 
-    @PostMapping
+    @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     fun addProgram(@RequestBody programDto: ProgramDto) = programService.saveProgram(programDto)
+
+    @PostMapping("update")
+    @ResponseStatus(HttpStatus.OK)
+    fun updateProgram(@RequestBody programDto: ProgramDto) {
+    println(programDto)
+    programService.updateProgram(programDto)
+}
 }

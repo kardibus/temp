@@ -37,7 +37,7 @@ open class Program : BaseEntity() {
     open var active: Boolean = false
 
     /** Ссылка на шаг */
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id")
     open lateinit var steps: MutableList<Step>
 }

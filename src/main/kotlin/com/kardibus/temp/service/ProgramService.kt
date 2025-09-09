@@ -89,6 +89,30 @@ class ProgramService(private val clock: Clock, private val programRepository: Pr
         )
     }
 
+    fun updateProgram(programDto: ProgramDto) {
+        println(programDto)
+        val program = programRepository.findById(programDto.id!!).get()
+
+        program.apply {
+            name = programDto.name
+            work = programDto.work
+            pause = programDto.pause
+            programDto.steps.map {
+                Step().apply {
+                    id = it.id
+                    step = it.step
+                    time = it.time
+                    dateStart = it.dateStart
+                    dateEnd = it.dateEnd
+                    done = it.done
+                    work = it.work
+                    temp = it.temp
+                }
+            }.toMutableList()
+        }
+        programRepository.save(program)
+    }
+
     fun deleteProgram(id: UUID) {
         programRepository.deleteById(id)
     }

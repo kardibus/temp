@@ -6,7 +6,6 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.Table
-import jakarta.persistence.UniqueConstraint
 import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
@@ -17,9 +16,9 @@ import java.time.LocalDateTime
 @EntityListeners(AuditListener::class)
 @Table(
     name = "step",
-    uniqueConstraints = [
-        UniqueConstraint(name = "uniqueConstraint_id_step", columnNames = ["id", "step"]),
-    ],
+//    uniqueConstraints = [
+//        UniqueConstraint(name = "uniqueConstraint_id_step", columnNames = ["id", "step"]),
+//    ],
 )
 open class Step : BaseEntity() {
     /** Шаг */
