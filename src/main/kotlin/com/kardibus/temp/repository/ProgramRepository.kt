@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface ProgramRepository : CrudRepository<Program, UUID>, ListCrudRepository<Program, UUID> {
+interface ProgramRepository : CrudRepository<Program, UUID> {
     @Query(
         """
         select p from UserBrewery u

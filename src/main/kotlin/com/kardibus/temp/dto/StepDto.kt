@@ -13,6 +13,7 @@ data class StepDto(
     var temp: Double,
     var time: Int,
     var work: Boolean,
+    var program: UUID?
 ) {
     constructor(step: Step) : this(
         id = step.id,
@@ -23,5 +24,6 @@ data class StepDto(
         done = step.done,
         work = step.work,
         temp = step.temp,
+        program = step.program?.id
     )
 }

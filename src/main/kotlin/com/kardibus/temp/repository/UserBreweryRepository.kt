@@ -7,4 +7,4 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface UserBreweryRepository : CrudRepository<UserBrewery, UUID>, ListCrudRepository<UserBrewery, UUID>
+interface UserBreweryRepository : CrudRepository<UserBrewery, UUID>

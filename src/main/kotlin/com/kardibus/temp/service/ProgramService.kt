@@ -5,17 +5,22 @@ import com.kardibus.temp.dto.StepDto
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
-import org.springframework.stereotype.Service
+import com.kardibus.temp.repository.StepRepository
 import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
+import org.springframework.stereotype.Service
 
 /**
  * Класс предназначен для расчета завершения программы
  */
 @Service
-class ProgramService(private val clock: Clock, private val programRepository: ProgramRepository) {
+class ProgramService(
+    private val clock: Clock,
+    private val programRepository: ProgramRepository,
+    private val stepRepository: StepRepository
+) {
     fun calculateTimeWorkProgram(id: UUID): Program {
         val program = programRepository.findProgramByUserId(id = id)
         val date = LocalDateTime.now(clock)
@@ -55,7 +60,6 @@ class ProgramService(private val clock: Clock, private val programRepository: Pr
 
     fun getPrograms(): List<ProgramDto> {
         val program = programRepository.findAll()
-        if (program.isEmpty()) emptyList<ProgramDto>()
         return program.map {
             ProgramDto(
                 id = it.id,
@@ -68,36 +72,41 @@ class ProgramService(private val clock: Clock, private val programRepository: Pr
     }
 
     fun saveProgram(programDto: ProgramDto) {
-        programRepository.save(
+        val programSaved = programRepository.save(
             Program().apply {
                 name = programDto.name
                 work = programDto.work
                 pause = programDto.pause
-                steps =
-                    programDto.steps.map {
-                        Step().apply {
-                            step = it.step
-                            time = it.time
-                            dateStart = it.dateStart
-                            dateEnd = it.dateEnd
-                            done = it.done
-                            work = it.work
-                            temp = it.temp
-                        }
-                    }.toMutableList()
-            },
+            }
         )
+        val mutableList = programDto.steps.map {
+            Step().apply {
+                step = it.step
+                time = it.time
+                dateStart = it.dateStart
+                dateEnd = it.dateEnd
+                done = it.done
+                work = it.work
+                temp = it.temp
+                program = programSaved
+            }
+        }.toMutableList()
+
+        stepRepository.saveAll(mutableList)
     }
 
     fun updateProgram(programDto: ProgramDto) {
         println(programDto)
-        val program = programRepository.findById(programDto.id!!).get()
+        val prog = programRepository.findById(programDto.id!!)
 
-        program.apply {
-            name = programDto.name
-            work = programDto.work
-            pause = programDto.pause
-            programDto.steps.map {
+        if (prog.isPresent) {
+
+            val programEntity = prog.get().apply {
+                name = programDto.name
+                work = programDto.work
+                pause = programDto.pause
+            }
+            val steps = programDto.steps.map {
                 Step().apply {
                     id = it.id
                     step = it.step
@@ -107,10 +116,14 @@ class ProgramService(private val clock: Clock, private val programRepository: Pr
                     done = it.done
                     work = it.work
                     temp = it.temp
+                    program = programEntity
                 }
             }.toMutableList()
+
+            println(programEntity)
+            programRepository.save(programEntity)
+            stepRepository.saveAll(steps)
         }
-        programRepository.save(program)
     }
 
     fun deleteProgram(id: UUID) {

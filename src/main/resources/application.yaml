@@ -20,7 +20,7 @@ spring:
                     lob:
                     non_contextual_creation: true
         open-in-view: false
-    hibernate:
-        ddl-auto: update
+        hibernate:
+            ddl-auto: create-drop
     liquibase:
         change-log: classpath:liquibase/changelog-master.xml

@@ -5,9 +5,13 @@ import com.kardibus.temp.model.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
+import java.util.UUID
 
 /**
  * Шаг для программы
@@ -46,7 +50,14 @@ open class Step : BaseEntity() {
     @Column(name = "work")
     open var work: Boolean = false
 
+    @ManyToOne
+    @JoinColumn(name = "program_id")
+    open var program: Program? = null
+
     /** Температура шага */
     @Column(name = "temp")
     open var temp: Double = 0.0
+    override fun toString(): String {
+        return "Step(step=$step, time=$time, dateStart=$dateStart, dateEnd=$dateEnd, done=$done, work=$work, temp=$temp)"
+    }
 }

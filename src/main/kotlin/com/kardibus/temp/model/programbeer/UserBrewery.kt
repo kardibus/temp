@@ -27,4 +27,8 @@ open class UserBrewery : BaseEntity() {
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_brewery_id")
     open var programs: MutableList<Program>? = null
+
+    override fun toString(): String {
+        return "UserBrewery(name='$name', email='$email', programs=$programs)"
+    }
 }

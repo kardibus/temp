@@ -37,7 +37,11 @@ open class Program : BaseEntity() {
     open var active: Boolean = false
 
     /** Ссылка на шаг */
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "program_id")
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "program")
     open lateinit var steps: MutableList<Step>
+
+
+    override fun toString(): String {
+        return "Program(name='$name', work=$work, pause=$pause, active=$active, steps=$steps)"
+    }
 }
