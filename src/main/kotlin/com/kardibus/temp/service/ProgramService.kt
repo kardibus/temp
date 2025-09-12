@@ -96,7 +96,6 @@ class ProgramService(
     }
 
     fun updateProgram(programDto: ProgramDto) {
-        println(programDto)
         val prog = programRepository.findById(programDto.id!!)
 
         if (prog.isPresent) {
@@ -106,6 +105,7 @@ class ProgramService(
                 work = programDto.work
                 pause = programDto.pause
             }
+
             val steps = programDto.steps.map {
                 Step().apply {
                     id = it.id
@@ -120,7 +120,6 @@ class ProgramService(
                 }
             }.toMutableList()
 
-            println(programEntity)
             programRepository.save(programEntity)
             stepRepository.saveAll(steps)
         }
