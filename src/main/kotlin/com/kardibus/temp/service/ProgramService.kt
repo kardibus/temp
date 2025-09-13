@@ -6,6 +6,7 @@ import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.repository.ProgramRepository
 import com.kardibus.temp.repository.StepRepository
+import com.kardibus.temp.utils.common.findByIdOrThrow
 import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
@@ -96,11 +97,9 @@ class ProgramService(
     }
 
     fun updateProgram(programDto: ProgramDto) {
-        val prog = programRepository.findById(programDto.id!!)
+        val prog = programRepository.findByIdOrThrow(programDto.id!!)
 
-        if (prog.isPresent) {
-
-            val programEntity = prog.get().apply {
+            val programEntity = prog.apply {
                 name = programDto.name
                 work = programDto.work
                 pause = programDto.pause
@@ -122,10 +121,17 @@ class ProgramService(
 
             programRepository.save(programEntity)
             stepRepository.saveAll(steps)
-        }
     }
 
     fun deleteProgram(id: UUID) {
         programRepository.deleteById(id)
+    }
+
+    fun changeWork(id: UUID, work: Boolean) {
+        programRepository.changeWorkById(id = id, work = work)
+    }
+
+    fun changePause(id: UUID, pause: Boolean) {
+        programRepository.changePauseById(id = id, pause = pause)
     }
 }

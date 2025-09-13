@@ -6,6 +6,8 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.ListCrudRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
 interface ProgramRepository : CrudRepository<Program, UUID> {
@@ -40,4 +42,14 @@ interface ProgramRepository : CrudRepository<Program, UUID> {
     """,
     )
     fun findAllByStepDoneFalse(id: UUID): Program
+
+    @Modifying
+    @Transactional
+    @Query("update Program p set p.work = :work where p.id = :id ")
+    fun changeWorkById(id: UUID, work: Boolean)
+
+    @Modifying
+    @Transactional
+    @Query("update Program p set p.pause = :pause where p.id = :id ")
+    fun changePauseById(id: UUID, pause: Boolean)
 }

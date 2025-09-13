@@ -16,7 +16,6 @@ class StepController(private val stepService: StepService) {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteStep(@PathVariable id: UUID) {
-        println(id)
         stepService.deleteStepById(id)
     }
 }
