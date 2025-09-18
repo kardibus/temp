@@ -7,8 +7,8 @@ import java.time.Clock
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
-import model.programbeer.Program
-import model.programbeer.Step
+import com.kardibus.model.programbeer.Program
+import com.kardibus.model.programbeer.Step
 import org.springframework.stereotype.Service
 
 /**

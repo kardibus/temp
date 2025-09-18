@@ -2,7 +2,7 @@ package com.kardibus.temp.service.program
 
 import com.kardibus.temp.service.step.StepDto
 import java.util.UUID
-import model.programbeer.Program
+import com.kardibus.model.programbeer.Program
 
 data class ProgramDto(
     var id: UUID?,

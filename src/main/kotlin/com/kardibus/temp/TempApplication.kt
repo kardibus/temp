@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootApplication(scanBasePackages = ["com.kardibus.*"])
 @EnableJpaRepositories(basePackages = ["com.kardibus.*"])
-@EntityScan(basePackages = ["model.*"])
+@EntityScan(basePackages = ["com.kardibus.*"])
 class TempApplication
 
 fun main(args: Array<String>) {

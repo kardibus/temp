@@ -1,7 +1,7 @@
 package com.kardibus.temp.service.work
 
 import com.kardibus.temp.dto.DataDto
-import model.brewery.Data
+import com.kardibus.model.brewery.Data
 import org.springframework.stereotype.Service
 
 @Service

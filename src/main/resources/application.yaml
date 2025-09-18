@@ -2,6 +2,8 @@ server:
     port: 8084
 
 spring:
+    profiles:
+        active: DEV
     main:
         allow-bean-definition-overriding: true
     aop:

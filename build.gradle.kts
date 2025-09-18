@@ -17,6 +17,7 @@ repositories {
 dependencies {
 
     ktlintRuleset(project(":core-ktlint-rules"))
+    implementation(project(":action"))
     implementation(project(":model"))
     implementation(project(":kafka"))
 

@@ -1,4 +1,4 @@
-package model
+package com.kardibus.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Id

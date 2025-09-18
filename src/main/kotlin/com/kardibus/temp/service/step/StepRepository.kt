@@ -1,7 +1,7 @@
 package com.kardibus.temp.service.step
 
 import java.util.UUID
-import model.programbeer.Step
+import com.kardibus.model.programbeer.Step
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository

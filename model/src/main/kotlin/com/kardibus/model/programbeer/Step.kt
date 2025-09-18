@@ -1,4 +1,4 @@
-package model.programbeer
+package com.kardibus.model.programbeer
 
 import jakarta.annotation.Nonnull
 import jakarta.persistence.Column
@@ -8,8 +8,8 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import java.time.LocalDateTime
-import model.AuditListener
-import model.BaseEntity
+import com.kardibus.model.AuditListener
+import com.kardibus.model.BaseEntity
 
 /**
  * Шаг для программы

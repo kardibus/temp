@@ -2,7 +2,7 @@ package com.kardibus.temp.service.step
 
 import java.time.LocalDateTime
 import java.util.UUID
-import model.programbeer.Step
+import com.kardibus.model.programbeer.Step
 
 data class StepDto(
     var dateEnd: LocalDateTime?,

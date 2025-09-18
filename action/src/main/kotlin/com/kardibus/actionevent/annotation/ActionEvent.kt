@@ -1,4 +1,4 @@
-package com.kardibus.temp.actionevent.annotation
+package com.kardibus.actionevent.annotation
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)

@@ -1,7 +1,7 @@
-package model.programbeer
+package com.kardibus.model.programbeer
 
-import model.AuditListener
-import model.BaseEntity
+import com.kardibus.model.AuditListener
+import com.kardibus.model.BaseEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

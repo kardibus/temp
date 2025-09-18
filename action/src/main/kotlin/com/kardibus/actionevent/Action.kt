@@ -1,4 +1,4 @@
-package com.kardibus.temp.actionevent
+package com.kardibus.actionevent
 
 abstract class Action<T, K>(val input: T, val output: K) {
     fun execute(

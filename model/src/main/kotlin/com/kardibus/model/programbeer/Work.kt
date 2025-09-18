@@ -1,6 +1,6 @@
-package model.programbeer
+package com.kardibus.model.programbeer
 
-import model.Labeled
+import com.kardibus.model.Labeled
 
 enum class Work(override val label: String) : Labeled {
     PAUSE("Пауза"),

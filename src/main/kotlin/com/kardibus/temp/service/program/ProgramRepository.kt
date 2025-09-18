@@ -1,7 +1,7 @@
 package com.kardibus.temp.service.program
 
 import java.util.UUID
-import model.programbeer.Program
+import com.kardibus.model.programbeer.Program
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query

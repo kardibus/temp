@@ -1,4 +1,4 @@
-package model
+package com.kardibus.model
 
 import jakarta.persistence.PrePersist
 import java.time.LocalDateTime

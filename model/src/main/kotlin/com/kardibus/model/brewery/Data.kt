@@ -1,7 +1,7 @@
-package model.brewery
+package com.kardibus.model.brewery
 
-import model.AuditListener
-import model.BaseEntity
+import com.kardibus.model.AuditListener
+import com.kardibus.model.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
