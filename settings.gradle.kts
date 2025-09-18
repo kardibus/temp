@@ -3,3 +3,5 @@ plugins {
 }
 rootProject.name = "temp"
 include("core-ktlint-rules")
+include("kafka")
+include("model")

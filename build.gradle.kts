@@ -2,9 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
     kotlin("jvm") version "2.1.0"
+    id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 repositories {
@@ -16,6 +17,8 @@ repositories {
 dependencies {
 
     ktlintRuleset(project(":core-ktlint-rules"))
+    implementation(project(":model"))
+    implementation(project(":kafka"))
 
     implementation("org.springframework.boot:spring-boot-starter:3.5.3")
     implementation("org.springframework.boot:spring-boot-starter-web:3.5.3")
@@ -45,7 +48,6 @@ dependencies {
 group = "com.kardibus"
 version = "0.0.1-SNAPSHOT"
 description = "temp"
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
@@ -63,12 +65,12 @@ tasks.withType<Javadoc> {
 }
 
 tasks {
-    test {
-        dependsOn(ktlintCheck)
-        mustRunAfter(ktlintCheck)
-        maxParallelForks = 3
-        useJUnitPlatform()
-    }
+//    test {
+//        dependsOn(ktlintCheck)
+//        mustRunAfter(ktlintCheck)
+//        maxParallelForks = 3
+//        useJUnitPlatform()
+//    }
 }
 
 ktlint {

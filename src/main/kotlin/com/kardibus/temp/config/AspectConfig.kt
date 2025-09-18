@@ -1,6 +1,6 @@
 package com.kardibus.temp.config
 
-import com.kardibus.temp.controller.InfoController
+import com.kardibus.temp.service.work.InfoController
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean

@@ -4,8 +4,10 @@ import com.kardibus.temp.common.CommonSpringTest
 import com.kardibus.temp.model.programbeer.Program
 import com.kardibus.temp.model.programbeer.Step
 import com.kardibus.temp.model.programbeer.UserBrewery
-import com.kardibus.temp.repository.ProgramRepository
-import com.kardibus.temp.repository.UserBreweryRepository
+import com.kardibus.temp.service.program.ProgramRepository
+import com.kardibus.temp.service.program.ProgramService
+import com.kardibus.temp.service.step.StepRepository
+import com.kardibus.temp.service.work.UserBreweryRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,6 +20,7 @@ class ProgramServiceTest
     @Autowired
     constructor(
         private var programRepository: ProgramRepository,
+        private val stepRepository: StepRepository,
         private val userBreweryRepository: UserBreweryRepository,
     ) : CommonSpringTest() {
         @Test
@@ -26,7 +29,7 @@ class ProgramServiceTest
             val fixedInstant = Instant.parse("2024-01-01T00:00:00Z")
             val clock = Clock.fixed(fixedInstant, ZoneOffset.UTC)
 
-            val programService = ProgramService(clock, programRepository)
+            val programService = ProgramService(clock, programRepository, stepRepository)
 
             val step1 =
                 Step().apply {
@@ -60,14 +63,14 @@ class ProgramServiceTest
 
             userBreweryRepository.save(userBrewery)
 
-            val result = programService.calculateTimeWorkProgram(userBrewery.id)
+            val result = programService.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(false, result.steps.first().done)
 
             val advancedClock = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
-            val programServiceAdvanced = ProgramService(advancedClock, programRepository)
+            val programServiceAdvanced = ProgramService(advancedClock, programRepository, stepRepository)
 
-            val resultTwo = programServiceAdvanced.calculateTimeWorkProgram(userBrewery.id)
+            val resultTwo = programServiceAdvanced.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(true, resultTwo.steps.first().done)
         }
@@ -78,7 +81,7 @@ class ProgramServiceTest
             val fixedInstant = Instant.parse("2024-01-01T00:00:00Z")
             val clock = Clock.fixed(fixedInstant, ZoneOffset.UTC)
 
-            val programService = ProgramService(clock, programRepository)
+            val programService = ProgramService(clock, programRepository, stepRepository)
 
             val step1 =
                 Step().apply {
@@ -112,7 +115,7 @@ class ProgramServiceTest
 
             userBreweryRepository.save(userBrewery)
 
-            val result = programService.calculateTimeWorkProgram(userBrewery.id)
+            val result = programService.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(false, result.steps.first().done)
             assertEquals(true, result.steps.first().work)
@@ -121,8 +124,8 @@ class ProgramServiceTest
             assertEquals(true, result.work)
 
             val clock2 = Clock.fixed(fixedInstant.plusSeconds(61), ZoneOffset.UTC)
-            val programService2 = ProgramService(clock2, programRepository)
-            val result2 = programService2.calculateTimeWorkProgram(userBrewery.id)
+            val programService2 = ProgramService(clock2, programRepository, stepRepository)
+            val result2 = programService2.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(false, result2.steps.first().done)
             assertEquals(true, result2.steps.first().work)
@@ -135,8 +138,8 @@ class ProgramServiceTest
             programRepository.save(result2)
 
             val clock3 = Clock.fixed(fixedInstant.plusSeconds(91), ZoneOffset.UTC)
-            val programService3 = ProgramService(clock3, programRepository)
-            val result3 = programService3.calculateTimeWorkProgram(userBrewery.id)
+            val programService3 = ProgramService(clock3, programRepository, stepRepository)
+            val result3 = programService3.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(false, result3.steps.first().done)
             assertEquals(true, result3.steps.first().work)
@@ -145,12 +148,12 @@ class ProgramServiceTest
             assertEquals(true, result3.work)
 
             val clock4 = Clock.fixed(fixedInstant.plusSeconds(121), ZoneOffset.UTC)
-            val programService4 = ProgramService(clock4, programRepository)
-            val result4 = programService4.calculateTimeWorkProgram(userBrewery.id)
+            val programService4 = ProgramService(clock4, programRepository, stepRepository)
+            val result4 = programService4.calculateTimeWorkProgram(userBrewery.id!!)
 
             val clock5 = Clock.fixed(fixedInstant.plusSeconds(151), ZoneOffset.UTC)
-            val programService5 = ProgramService(clock5, programRepository)
-            val result5 = programService5.calculateTimeWorkProgram(userBrewery.id)
+            val programService5 = ProgramService(clock5, programRepository, stepRepository)
+            val result5 = programService5.calculateTimeWorkProgram(userBrewery.id!!)
 
             assertEquals(true, result5.steps.first().done)
             assertEquals(false, result5.steps.first().work)
