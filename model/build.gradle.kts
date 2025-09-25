@@ -1,5 +1,4 @@
 plugins {
-    id("org.springframework.boot") version "3.5.3"
     id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
     id("io.spring.dependency-management")
     kotlin("jvm") version "2.1.0"
@@ -13,11 +12,15 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.3")
 
     testImplementation(kotlin("test"))
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = true
 }

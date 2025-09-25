@@ -41,6 +41,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+
     testImplementation("com.h2database:h2:2.3.232")
     testImplementation("org.springframework.boot:spring-boot-starter-test:3.5.3")
     testImplementation("org.assertj:assertj-core:3.27.0")

@@ -1,20 +1,7 @@
 package com.kardibus.actionevent
 
-abstract class Action<T, K>(val input: T, val output: K) {
-    fun execute(
-        input: T,
-        output: K,
-    ) {
-    }
+import jakarta.persistence.EntityManager
+import org.springframework.stereotype.Service
 
-    fun executeAndReturn(
-        input: T,
-        output: K,
-    ): Any {
-        return Any()
-    }
-
-    fun save() {}
-
-    fun update() {}
-}
+@Service
+class Action(entityManager: EntityManager)

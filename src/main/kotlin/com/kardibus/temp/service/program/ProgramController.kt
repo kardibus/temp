@@ -1,5 +1,8 @@
 package com.kardibus.temp.service.program
 
+import com.kardibus.actionevent.annotation.ActionEvent
+import com.kardibus.model.action.ActionName
+import com.kardibus.model.action.ActionName.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,36 +17,30 @@ import java.util.UUID
 @RestController
 @RequestMapping("program/v1")
 class ProgramController(private val programService: ProgramService) {
+
+    @ActionEvent(name = PROGRAM)
     @GetMapping
     fun getProgram(): List<ProgramDto> = programService.getPrograms()
 
+    @ActionEvent(name = PROGRAM)
     @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addProgram(
-        @RequestBody programDto: ProgramDto,
-    ) = programService.saveProgram(programDto = programDto)
+    fun addProgram(@RequestBody programDto: ProgramDto) = programService.saveProgram(programDto = programDto)
 
+    @ActionEvent(name = PROGRAM)
     @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
-    fun updateProgram(
-        @RequestBody programDto: ProgramDto,
-    ) = programService.updateProgram(programDto = programDto)
+    fun updateProgram(@RequestBody programDto: ProgramDto) = programService.updateProgram(programDto = programDto)
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteProgram(
-        @PathVariable id: UUID,
-    ) = programService.deleteProgram(id = id)
+    fun deleteProgram(@PathVariable id: UUID) = programService.deleteProgram(id = id)
 
     @PostMapping("work")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
-    fun changeWork(
-        @RequestBody changeWork: ChangeWork,
-    ) = programService.changeWork(changeWork.id, changeWork.work)
+    fun changeWork(@RequestBody changeWork: ChangeWork) = programService.changeWork(changeWork.id, changeWork.work)
 
     @PostMapping("pause")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
-    fun changePause(
-        @RequestBody changePause: ChangePause,
-    ) = programService.changePause(changePause.id, changePause.pause)
+    fun changePause(@RequestBody changePause: ChangePause) = programService.changePause(changePause.id, changePause.pause)
 }
