@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
     id("io.spring.dependency-management")
     kotlin("jvm") version "2.1.0"
+    id("org.hibernate.orm") version "7.1.1.Final"
 }
 
 group = "com.kardibus"

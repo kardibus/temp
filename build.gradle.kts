@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "2.1.0"
     id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.hibernate.orm") version "7.1.1.Final"
 }
 
 repositories {

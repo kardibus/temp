@@ -1,7 +1,6 @@
 package com.kardibus.temp.service.program
 
-import com.kardibus.actionevent.annotation.ActionEvent
-import com.kardibus.model.action.ActionName
+import com.kardibus.actionevent.annotation.ActionEventAnnotation
 import com.kardibus.model.action.ActionName.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -18,16 +17,15 @@ import java.util.UUID
 @RequestMapping("program/v1")
 class ProgramController(private val programService: ProgramService) {
 
-    @ActionEvent(name = PROGRAM)
     @GetMapping
     fun getProgram(): List<ProgramDto> = programService.getPrograms()
 
-    @ActionEvent(name = PROGRAM)
+    @ActionEventAnnotation(name = PROGRAM)
     @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     fun addProgram(@RequestBody programDto: ProgramDto) = programService.saveProgram(programDto = programDto)
 
-    @ActionEvent(name = PROGRAM)
+    @ActionEventAnnotation(name = PROGRAM)
     @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
     fun updateProgram(@RequestBody programDto: ProgramDto) = programService.updateProgram(programDto = programDto)
