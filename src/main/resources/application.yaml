@@ -2,6 +2,10 @@ server:
     port: 8084
 
 spring:
+    profiles:
+        active: DEV
+    main:
+        allow-bean-definition-overriding: true
     aop:
         auto: true
     datasource:
@@ -18,7 +22,7 @@ spring:
                     lob:
                     non_contextual_creation: true
         open-in-view: false
-    hibernate:
-        ddl-auto: update
+        hibernate:
+            ddl-auto: update
     liquibase:
         change-log: classpath:liquibase/changelog-master.xml
