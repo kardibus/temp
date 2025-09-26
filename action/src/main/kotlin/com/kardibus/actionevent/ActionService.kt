@@ -11,22 +11,16 @@ class ActionService(
 ) {
 
     @Transactional
-    fun execute(input: ByteArray, output: ByteArray, action: Action) {
-        action.input = input
-        action.output = output
-        save(action)
+    fun execute(input: ByteArray, output: ByteArray): Action {
+        var entity = Action()
+        entity.input = input
+        entity.output = output
+
+        return saveOrUpdate(entity)
     }
 
-    fun save(action: Action) {
-        if (action.id == null) {
-            em.persist(action)   // новый объект
-        } else {
-            em.merge(action)     // обновляем существующий
-        }
-    }
-
-
-    fun findById(id: Long): Action? {
-        return em.find(Action::class.java, id)
+    fun saveOrUpdate(action: Action): Action {
+        em.persist(action)
+        return action
     }
 }

@@ -17,6 +17,7 @@ import java.util.UUID
 @RequestMapping("program/v1")
 class ProgramController(private val programService: ProgramService) {
 
+    @ActionEventAnnotation(name = PROGRAM)
     @GetMapping
     fun getProgram(): List<ProgramDto> = programService.getPrograms()
 
@@ -30,14 +31,17 @@ class ProgramController(private val programService: ProgramService) {
     @ResponseStatus(HttpStatus.OK)
     fun updateProgram(@RequestBody programDto: ProgramDto) = programService.updateProgram(programDto = programDto)
 
+    @ActionEventAnnotation(name = PROGRAM)
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteProgram(@PathVariable id: UUID) = programService.deleteProgram(id = id)
 
+    @ActionEventAnnotation(name = PROGRAM)
     @PostMapping("work")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
     fun changeWork(@RequestBody changeWork: ChangeWork) = programService.changeWork(changeWork.id, changeWork.work)
 
+    @ActionEventAnnotation(name = PROGRAM)
     @PostMapping("pause")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
     fun changePause(@RequestBody changePause: ChangePause) = programService.changePause(changePause.id, changePause.pause)
