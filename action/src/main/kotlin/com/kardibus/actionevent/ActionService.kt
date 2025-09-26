@@ -2,6 +2,7 @@ package com.kardibus.actionevent
 
 import com.kardibus.model.action.Action
 import jakarta.persistence.EntityManager
+import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,6 +16,7 @@ class ActionService(
         var entity = Action()
         entity.input = input
         entity.output = output
+        entity.completionDate = LocalDateTime.now()
 
         return saveOrUpdate(entity)
     }
